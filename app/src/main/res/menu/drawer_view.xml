@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_main"
+            android:title="Main" />
+        <item
+            android:id="@+id/menu_share"
+            android:title="Share" />
+        <item
+            android:id="@+id/menu_about_me"
+            android:title="About Me" />
+    </group>
+</menu>
