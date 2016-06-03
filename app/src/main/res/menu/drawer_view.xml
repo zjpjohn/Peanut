@@ -3,12 +3,9 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_main"
-            android:title="Main" />
+            android:title="main" />
         <item
-            android:id="@+id/menu_share"
-            android:title="Share" />
-        <item
-            android:id="@+id/menu_about_me"
-            android:title="About Me" />
+            android:id="@+id/menu_like"
+            android:title="like" />
     </group>
 </menu>
