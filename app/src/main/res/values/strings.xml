@@ -6,4 +6,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_shot_dtail">ShotDtailActivity</string>
     <string name="title_activity_picture_detail">PictureDetailActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>
