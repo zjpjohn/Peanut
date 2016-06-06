@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/head_background">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/header_draweeview"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:roundAsCircle="true"
+        android:layout_margin="20dp"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="header"/>
-
-</LinearLayout>
+        android:id="@+id/header_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Haonan Dai"
+        android:layout_below="@+id/header_draweeview"/>
+</RelativeLayout>

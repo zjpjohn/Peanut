@@ -16,21 +16,30 @@ public class ShotPresenter implements ShotsContract.Presenter {
 
     public static final String TAG = "ShortPresenter";
 
-    private ShotsContract.View mView;
+    private ShotsContract.View mShotView;
+    private ShotsContract.View mDebutsView;
+    private ShotsContract.View mGifView;
     private ShotDataSource mShotDataSource;
 
     private int shotsPage = 1;
     private int debutsPage = 1;
     private int gifsPage = 1;
 
-    public ShotPresenter(ShotsContract.View view, ShotDataSource dataSource) {
+    public ShotPresenter(ShotsContract.View shotView,
+                         ShotsContract.View debutsView,
+                         ShotsContract.View gifView,
+                         ShotDataSource dataSource) {
 
-        mView = view;
+        mShotView = shotView;
+        mDebutsView = debutsView;
+        mGifView = gifView;
+
         mShotDataSource = dataSource;
-        mView.setPresenter(this);
 
+        mShotView.setPresenter(this);
+        mDebutsView.setPresenter(this);
+        mGifView.setPresenter(this);
     }
-
 
     @Override
     public void loadShots(boolean isFirstPage) {
@@ -39,15 +48,15 @@ public class ShotPresenter implements ShotsContract.Presenter {
         }
 
         if (shotsPage == 1) {
-            mView.showLoading();
+            mShotView.showLoading();
         }
 
         mShotDataSource.getShots(null, shotsPage, new ShotDataSource.LoadShotsCallback() {
             @Override
             public void onShotsLoaded(List<Shot> shots) {
-                mView.hideLoading();
-                mView.showLoadingIndicator(false);
-                mView.showShots(shots);
+                mShotView.hideLoading();
+                mShotView.showLoadingIndicator(false);
+                mShotView.showShots(shots);
 
                 Log.e(TAG, "shots: " + shots);
 
@@ -69,15 +78,15 @@ public class ShotPresenter implements ShotsContract.Presenter {
         }
 
         if (debutsPage == 1) {
-            mView.showLoading();
+            mDebutsView.showLoading();
         }
 
         mShotDataSource.getDebuts(null, debutsPage, new ShotDataSource.LoadShotsCallback() {
             @Override
             public void onShotsLoaded(List<Shot> debuts) {
-                mView.hideLoading();
-                mView.showLoadingIndicator(false);
-                mView.showShots(debuts);
+                mDebutsView.hideLoading();
+                mDebutsView.showLoadingIndicator(false);
+                mDebutsView.showShots(debuts);
 
                 Log.e(TAG, "debuts: " + debuts);
             }
@@ -98,15 +107,15 @@ public class ShotPresenter implements ShotsContract.Presenter {
         }
 
         if (gifsPage == 1) {
-            mView.showLoading();
+            mGifView.showLoading();
         }
 
         mShotDataSource.getGifs(null, gifsPage, new ShotDataSource.LoadShotsCallback() {
             @Override
             public void onShotsLoaded(List<Shot> gifs) {
-                mView.hideLoading();
-                mView.showLoadingIndicator(false);
-                mView.showShots(gifs);
+                mGifView.hideLoading();
+                mGifView.showLoadingIndicator(false);
+                mGifView.showShots(gifs);
 
                 Log.e(TAG, "gifs: " + gifs);
 
