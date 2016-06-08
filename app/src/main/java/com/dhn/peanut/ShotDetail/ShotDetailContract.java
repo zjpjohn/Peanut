@@ -1,4 +1,4 @@
-package com.dhn.peanut.ShotDetail;
+package com.dhn.peanut.shotdetail;
 
 import com.dhn.peanut.data.Comment;
 

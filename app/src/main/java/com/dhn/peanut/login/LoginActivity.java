@@ -1,8 +1,11 @@
 package com.dhn.peanut.login;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,7 +28,6 @@ import com.dhn.peanut.util.RequestManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,15 +36,14 @@ import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public static final String DRIBBLE_SHARE = "com.dhn.dribble.share";
-    public static final String DRIBBLE_TOKEN = "com.dhn.dribble.token";
 
     @BindView(R.id.login_webview)
     WebView mWebView;
     @BindView(R.id.login_progress)
     ProgressBar mLoading;
 
-    private SharedPreferences mTokenShare;
+    private SharedPreferences dribblePrefer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +56,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initView() {
 
-        mTokenShare = getSharedPreferences(DRIBBLE_SHARE, Context.MODE_PRIVATE);
-        String token = mTokenShare.getString(DRIBBLE_TOKEN, null);
+
+        dribblePrefer = PreferenceManager.getDefaultSharedPreferences(this);
+        String token = dribblePrefer.getString(PeanutInfo.PREFERENCE_TOKEN, null);
 
         if (TextUtils.isEmpty(token)) {
             //进行验证
@@ -86,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                             //获取token
                             requestForAccessToken(code);
                         } else {
-                            Toast.makeText(LoginActivity.this, "code is empty", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "error, code is empty", Toast.LENGTH_SHORT).show();
                         }
 
                         //忽略发送从定向url的请求
@@ -110,6 +112,9 @@ public class LoginActivity extends AppCompatActivity {
             mWebView.loadUrl(PeanutInfo.LOGIN_URL);
         } else {
             //已获得token,直接使用
+            if (Log.DBG) {
+                Log.e("already get token");
+            }
             onCompleteAuth();
         }
 
@@ -149,8 +154,9 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             //保存token
                             String accessToken = (String) response.get("access_token");
-                            SharedPreferences.Editor editor = mTokenShare.edit();
-                            editor.putString(PeanutInfo.TOKEN_FIELD, accessToken);
+
+                            SharedPreferences.Editor editor = dribblePrefer.edit();
+                            editor.putString(PeanutInfo.PREFERENCE_TOKEN, accessToken);
                             editor.commit();
 
                             if (Log.DBG) {
@@ -168,7 +174,7 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(LoginActivity.this, "get token error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "error, get token failed", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -181,9 +187,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void fetchUserInfo() {
-        final String token = mTokenShare.getString(PeanutInfo.TOKEN_FIELD, null);
+        final String token = dribblePrefer.getString(PeanutInfo.PREFERENCE_TOKEN, null);
+
         if (token == null) {
-            Toast.makeText(LoginActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "error, token is null", Toast.LENGTH_SHORT).show();
         } else {
             String url = PeanutInfo.MY_INFO_URL;
 
@@ -193,12 +200,27 @@ public class LoginActivity extends AppCompatActivity {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+                            //保存用户信息
                             saveProfile(response);
+
+
+                            //返回数据
+                            String username = "Dai";
+                            try {
+                                username = response.getString("username");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Intent returnIntent = new Intent();
+                            returnIntent.putExtra("username", username);
+                            setResult(Activity.RESULT_OK, returnIntent);
+                            finish();
                         }
                     },
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(LoginActivity.this, "error, get user data failed", Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -222,8 +244,15 @@ public class LoginActivity extends AppCompatActivity {
             int id = response.getInt("id");
             String userName = response.getString("username");
 
+            dribblePrefer.edit().putInt(PeanutInfo.PREFERENCE_USER_ID, response.getInt("id")).commit();
+            dribblePrefer.edit().putString(PeanutInfo.PREFERENCE_USER_NAME, response.getString("username")).commit();
+            dribblePrefer.edit().putString(PeanutInfo.PREFERENCE_USER_AVATAR, response.getString("avatar_url")).commit();
+            dribblePrefer.edit().putInt(PeanutInfo.PREFERENCE_USER_LIKES, response.getInt("likes_count")).commit();
+            dribblePrefer.edit().putBoolean(PeanutInfo.PREFERENCE_USER_LOGINED, true).commit();
+
             if (Log.DBG) {
-                Log.i("id=" + id + " username=" + userName);
+                Log.e("id=" + dribblePrefer.getInt(PeanutInfo.PREFERENCE_USER_ID, 0) + " username=" + userName);
+                Log.e("isLogined = " + dribblePrefer.getBoolean(PeanutInfo.PREFERENCE_USER_LOGINED, false));
             }
 
         } catch (JSONException e) {

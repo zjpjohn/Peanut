@@ -1,4 +1,4 @@
-package com.dhn.peanut.ShotDetail;
+package com.dhn.peanut.shotdetail;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -6,11 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dhn.peanut.R;
 import com.dhn.peanut.data.Comment;
@@ -21,19 +23,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by DHN on 2016/6/1.
  */
 public class ShotDetailFragment extends Fragment implements ShotDetailContract.View{
 
     private SimpleDraweeView mDraweeView;
-    private TextView mTextLike;
-    private TextView mTextView;
-    private TextView mTextTitle;
-    private TextView mTextTime;
     private RecyclerView mRecyclerView;
 
     private Shot mShot;
@@ -58,6 +53,8 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
             mShot = (Shot) getArguments().get("shot");
         }
 
+        setHasOptionsMenu(true);
+
     }
 
     @Nullable
@@ -65,10 +62,6 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shot_detail, container, false);
         mDraweeView = (SimpleDraweeView) view.findViewById(R.id.detail_iv);
-        mTextLike = (TextView) view.findViewById(R.id.like);
-        mTextView = (TextView) view.findViewById(R.id.view);
-        mTextTitle = (TextView) view.findViewById(R.id.title);
-        mTextTime = (TextView) view.findViewById(R.id.time);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.detail_recyclerview);
         return view;
     }
@@ -86,7 +79,7 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
 
     private void initView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        commentAdapter = new CommentAdapter(getContext());
+        commentAdapter = new CommentAdapter(getContext(), mShot);
         mRecyclerView.setAdapter(commentAdapter);
     }
 
@@ -113,9 +106,25 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
     @Override
     public void showPicInfor() {
 
-        mTextTitle.setText(mShot.getTitle());
-        mTextLike.setText("" + mShot.getLikes_count());
-        mTextView.setText("" + mShot.getViews_count());
-        mTextTime.setText("" + mShot.getCreated_at());
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_shot_detail, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_share:
+                Toast.makeText(getActivity(), "in develop", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_like:
+                Toast.makeText(getActivity(), "in develop", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
+
     }
 }

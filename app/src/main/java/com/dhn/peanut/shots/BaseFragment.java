@@ -7,14 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.dhn.library.HourglassLoadingView;
-import com.dhn.peanut.PictrueDetail.PictureDetailActivity;
 import com.dhn.peanut.R;
+import com.dhn.peanut.shotdetail.ShotDtailActivity;
 import com.dhn.peanut.view.AutoLoadRecyclerView;
 import com.dhn.peanut.data.Shot;
 
@@ -60,21 +58,12 @@ public class BaseFragment extends Fragment implements ShotsContract.View {
         shotAdapter = new ShotAdapter(getActivity(), this);
         mRecyclerView.setAdapter(shotAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        //TODO
-
 
         //SwiperefreshLayout
         mSwipeRefreshLayout.setColorSchemeResources(
                 R.color.colorAccent,
                 R.color.colorPrimary,
                 R.color.colorPrimaryDark);
-        //TODO
-
-
-
-        //TODO
-
-        setHasOptionsMenu(true);
 
     }
 
@@ -96,7 +85,7 @@ public class BaseFragment extends Fragment implements ShotsContract.View {
     @Override
     public void showShotDetails(Shot shot) {
         //TODO 跳转到图片详情页
-        Intent intent = new Intent(getContext(), PictureDetailActivity.class);
+        Intent intent = new Intent(getContext(), ShotDtailActivity.class);
         intent.putExtra("shot", shot);
         startActivity(intent);
     }
@@ -115,9 +104,5 @@ public class BaseFragment extends Fragment implements ShotsContract.View {
         mLoadingView.stop();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_main, menu);
-    }
 
 }

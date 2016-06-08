@@ -1,5 +1,7 @@
 package com.dhn.peanut.data;
 
+import android.preference.PreferenceActivity;
+
 import java.io.Serializable;
 
 /**
@@ -10,9 +12,21 @@ public class Comment implements Serializable {
     //base_url/shot_id/comments
     public static final String COMMENTS_BASE_URL = "https://api.dribbble.com/v1/shots/";
 
+    public static final int NORNAL = 0;
+    public static final int HEADER = 1;
+
     private int id;
     private String body;
     private Shot.User user;
+    private int type = NORNAL;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public int getId() {
         return id;

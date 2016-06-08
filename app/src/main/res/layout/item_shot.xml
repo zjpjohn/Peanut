@@ -6,9 +6,9 @@
     xmlns:app="http://schemas.android.com/tools"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:layout_marginTop="4dp"
+    android:layout_marginTop="6dp"
     app:cardBackgroundColor="#FFF"
-    app:cardCornerRadius="2dp"
+    app:cardCornerRadius="4dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true"
     app:contentPadding="16dp">
@@ -21,21 +21,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="12dp">
 
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:src="@drawable/ic_profile"/>
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/shot_avatar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                fresco:roundAsCircle="true"/>
 
             <TextView
                 android:id="@+id/shot_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:paddingLeft="15dp"
                 android:text="Turtle"/>
-
-
         </LinearLayout>
 
         <com.facebook.drawee.view.SimpleDraweeView
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            fresco:placeholderImage="@drawable/placeholder"
+            android:background="@color/image_placeholder"
             fresco:failureImageScaleType="centerCrop"
             fresco:roundedCornerRadius="3dp"
             fresco:viewAspectRatio="1.33" />
@@ -52,44 +52,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="10dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_views"/>
+                android:src="@drawable/eye"
+                android:layout_margin="4dp"/>
 
             <TextView
                 android:id="@+id/item_shot_views"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
+                android:layout_margin="4dp"
                 android:text="1638" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:src="@drawable/ic_likes"/>
+                android:layout_margin="4dp"
+                android:src="@drawable/heart"/>
 
             <TextView
                 android:id="@+id/item_shot_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
+                android:layout_margin="4dp"
                 android:text="126" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_comments"
-                android:layout_marginLeft="4dp"/>
+                android:src="@drawable/message_reply"
+                android:layout_margin="4dp"/>
 
             <TextView
                 android:id="@+id/item_shot_comments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
+                android:layout_margin="4dp"
                 android:text="9" />
 
 

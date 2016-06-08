@@ -1,22 +1,13 @@
-package com.dhn.peanut.ShotDetail;
+package com.dhn.peanut.shotdetail;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.TextView;
+import android.view.MenuItem;
 
 import com.dhn.peanut.R;
 import com.dhn.peanut.data.Shot;
 import com.dhn.peanut.data.remote.RemoteCommentsData;
-import com.facebook.drawee.view.SimpleDraweeView;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class ShotDtailActivity extends AppCompatActivity {
 
@@ -41,7 +32,10 @@ public class ShotDtailActivity extends AppCompatActivity {
     private void initView() {
         //toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        mToolbar.setTitle(mShot.getTitle());
         setSupportActionBar(mToolbar);
+        mToolbar.setNavigationIcon(R.drawable.arrow_left);
 
         //添加引用关系
         mFragment = ShotDetailFragment.getInstance(mShot);
@@ -53,6 +47,16 @@ public class ShotDtailActivity extends AppCompatActivity {
                 .commit();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        //左上角返回按钮
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
 
+        return super.onOptionsItemSelected(item);
+
+    }
 }

@@ -7,4 +7,7 @@
     <string name="title_activity_shot_dtail">ShotDtailActivity</string>
     <string name="title_activity_picture_detail">PictureDetailActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>
