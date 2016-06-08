@@ -29,6 +29,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dhn.peanut.data.remote.RemoteShotData;
+import com.dhn.peanut.like.LikeActivity;
+import com.dhn.peanut.like.LikeAdapter;
 import com.dhn.peanut.login.LoginActivity;
 import com.dhn.peanut.profile.ProfileActivity;
 import com.dhn.peanut.shots.DebutsFragment;
@@ -147,11 +149,9 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem item) {
 
                         switch (item.getItemId()) {
-                            case R.id.menu_main:
-                                Toast.makeText(MainActivity.this, "shots", Toast.LENGTH_SHORT).show();
-                                break;
                             case R.id.menu_like:
-                                Toast.makeText(MainActivity.this, "liek", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MainActivity.this, LikeActivity.class);
+                                startActivity(intent);
                                 break;
                             case R.id.menu_me:
                                 Toast.makeText(MainActivity.this, "me", Toast.LENGTH_SHORT).show();
@@ -252,7 +252,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return true;
-
     }
 
     @Override

@@ -247,6 +247,7 @@ public class LoginActivity extends AppCompatActivity {
             dribblePrefer.edit().putInt(PeanutInfo.PREFERENCE_USER_ID, response.getInt("id")).commit();
             dribblePrefer.edit().putString(PeanutInfo.PREFERENCE_USER_NAME, response.getString("username")).commit();
             dribblePrefer.edit().putString(PeanutInfo.PREFERENCE_USER_AVATAR, response.getString("avatar_url")).commit();
+            dribblePrefer.edit().putString(PeanutInfo.PREFERENCE_USER_LIKE_URL, response.getString("likes_url")).commit();
             dribblePrefer.edit().putInt(PeanutInfo.PREFERENCE_USER_LIKES, response.getInt("likes_count")).commit();
             dribblePrefer.edit().putBoolean(PeanutInfo.PREFERENCE_USER_LOGINED, true).commit();
 

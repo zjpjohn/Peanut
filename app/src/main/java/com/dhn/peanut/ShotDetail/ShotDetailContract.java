@@ -13,9 +13,15 @@ public interface ShotDetailContract {
         void showComments(List<Comment> comments);
         void showPicture();
         void showPicInfor();
+        void showLike();
+        void showUnLike();
     }
 
     interface Presenter {
         void loadComment(int shotId);
+        void share();
+        void checkLiked(int id);         //根据是否喜欢该shot，设置样式
+        void changeLike(int id);
+
     }
 }

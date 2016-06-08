@@ -15,11 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.dhn.peanut.view.AutoLoadRecyclerView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            </com.dhn.peanut.view.AutoLoadRecyclerView>
+            </android.support.v7.widget.RecyclerView>
 
 
             <com.dhn.library.HourglassLoadingView
@@ -31,6 +31,17 @@
                 android:layout_gravity="center"
                 android:visibility="gone"/>
 
+            <TextView
+                android:id="@+id/like_nolike_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:text="no like"
+                android:visibility="gone"/>
+
         </FrameLayout>
+
+
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

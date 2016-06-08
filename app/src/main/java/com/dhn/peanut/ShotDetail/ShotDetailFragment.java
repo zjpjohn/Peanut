@@ -30,6 +30,7 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
 
     private SimpleDraweeView mDraweeView;
     private RecyclerView mRecyclerView;
+    private Menu mMenu;
 
     private Shot mShot;
     private ShotDetailContract.Presenter mPresenter;
@@ -75,6 +76,12 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
         mPresenter.loadComment(mShot.getId());
         showPicture();
         showPicInfor();
+        mRecyclerView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPresenter.checkLiked(mShot.getId());
+            }
+        }, 1000);
     }
 
     private void initView() {
@@ -109,19 +116,33 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
     }
 
     @Override
+    public void showLike() {
+        mMenu.findItem(R.id.menu_like).setIcon(R.drawable.heart);
+    }
+
+    @Override
+    public void showUnLike() {
+        mMenu.findItem(R.id.menu_like).setIcon(R.drawable.heart_outline);
+    }
+
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_shot_detail, menu);
+        mMenu = menu;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_share:
+                //TODO
                 Toast.makeText(getActivity(), "in develop", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_like:
-                Toast.makeText(getActivity(), "in develop", Toast.LENGTH_SHORT).show();
+                //TODO
+                mPresenter.changeLike(mShot.getId());
                 break;
         }
         return true;

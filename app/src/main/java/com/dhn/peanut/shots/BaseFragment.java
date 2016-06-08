@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.dhn.library.HourglassLoadingView;
 import com.dhn.peanut.R;
-import com.dhn.peanut.shotdetail.ShotDtailActivity;
+import com.dhn.peanut.shotdetail.ShotDetailActivity;
 import com.dhn.peanut.view.AutoLoadRecyclerView;
 import com.dhn.peanut.data.Shot;
 
@@ -24,7 +24,6 @@ import butterknife.ButterKnife;
 
 public class BaseFragment extends Fragment implements ShotsContract.View {
 
-    public static final String TAG = "BaseFragment";
 
     @BindView(R.id.refreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -85,7 +84,7 @@ public class BaseFragment extends Fragment implements ShotsContract.View {
     @Override
     public void showShotDetails(Shot shot) {
         //TODO 跳转到图片详情页
-        Intent intent = new Intent(getContext(), ShotDtailActivity.class);
+        Intent intent = new Intent(getContext(), ShotDetailActivity.class);
         intent.putExtra("shot", shot);
         startActivity(intent);
     }

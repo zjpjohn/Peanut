@@ -181,6 +181,15 @@ public class Shot implements Serializable{
         public void setUsername(String username) {
             this.username = username;
         }
+
+        @Override
+        public String toString() {
+            return "User{" +
+                    "id=" + id +
+                    ", username='" + username + '\'' +
+                    ", avatar_url='" + avatar_url + '\'' +
+                    '}';
+        }
     }
 
 }

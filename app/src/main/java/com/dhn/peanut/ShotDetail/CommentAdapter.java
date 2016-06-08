@@ -65,7 +65,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
             holder.commenterPic.setImageURI(uri);
         } else {
             holder.commentTitle.setText(shot.getTitle());
-            holder.commentDesc.setText(Html.fromHtml(shot.getDescription()));
+            String desc = shot.getDescription() != null ? shot.getDescription() : "";
+            holder.commentDesc.setText(Html.fromHtml(desc));
             Uri uri = Uri.parse(shot.getUser().getAvatar_url());
             holder.authorPic.setImageURI(uri);
             holder.authorName.setText(shot.getUser().getUsername());
