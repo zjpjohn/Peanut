@@ -51,7 +51,6 @@ public class RemoteShotData implements ShotDataSource {
             url += "&sort=" + sort;
         }
 
-        Log.e(TAG, "url=" + url);
 
         if (page == 1) {
             shots.clear();
@@ -83,7 +82,6 @@ public class RemoteShotData implements ShotDataSource {
             url += "&sort=" + sort;
         }
 
-        Log.e(TAG, "url=" + url);
 
 
         if (page == 1) {
@@ -115,8 +113,6 @@ public class RemoteShotData implements ShotDataSource {
         if (sort != null) {
             url += "&sort=" + sort;
         }
-
-        Log.e(TAG, "url=" + url);
 
 
         if (page == 1) {

@@ -25,11 +25,13 @@ public class ShotDtailPresenter implements ShotDetailContract.Presenter {
 
     @Override
     public void loadComment(int shotId) {
+        mView.showProgress();
 
         mDatasource.getComment(shotId, new ShotDetailDataSource.LoadShotDetailCallBack() {
             @Override
             public void onCommentLoaded(List<Comment> comments) {
                 mView.showComments(comments);
+                mView.hideProgress();
             }
 
             @Override
@@ -39,15 +41,11 @@ public class ShotDtailPresenter implements ShotDetailContract.Presenter {
 
             @Override
             public void onCommentNotAvailable() {
-
+                mView.showToast("something wrong, please check your network");
             }
         });
     }
 
-    @Override
-    public void share() {
-        //TODO
-    }
 
 
     @Override

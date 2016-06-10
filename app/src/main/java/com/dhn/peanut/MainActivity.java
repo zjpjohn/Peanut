@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -30,8 +29,8 @@ import android.widget.Toast;
 
 import com.dhn.peanut.data.remote.RemoteShotData;
 import com.dhn.peanut.like.LikeActivity;
-import com.dhn.peanut.like.LikeAdapter;
 import com.dhn.peanut.login.LoginActivity;
+import com.dhn.peanut.profile.MeActivity;
 import com.dhn.peanut.profile.ProfileActivity;
 import com.dhn.peanut.shots.DebutsFragment;
 import com.dhn.peanut.shots.GifFragment;
@@ -131,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initToolbar() {
         //ToolBar
-        mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.black));
         setSupportActionBar(mToolbar);
         ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -154,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case R.id.menu_me:
-                                Toast.makeText(MainActivity.this, "me", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(MainActivity.this, MeActivity.class));
                                 break;
                             default:
                                 break;
@@ -191,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         SimpleDraweeView profileView = (SimpleDraweeView) mHeader.findViewById(R.id.header_draweeview);
-        Uri uri = Uri.parse("res://com.dhn.peanut/" + R.drawable.header_profile);
+        Uri uri = Uri.parse("res://com.dhn.peanut/" + R.drawable.avatar);
         profileView.setImageURI(uri);
     }
 

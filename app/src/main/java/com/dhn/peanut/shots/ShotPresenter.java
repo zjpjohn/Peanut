@@ -88,7 +88,6 @@ public class ShotPresenter implements ShotsContract.Presenter {
                 mDebutsView.showLoadingIndicator(false);
                 mDebutsView.showShots(debuts);
 
-                Log.e(TAG, "debuts: " + debuts);
             }
 
             @Override
@@ -116,9 +115,6 @@ public class ShotPresenter implements ShotsContract.Presenter {
                 mGifView.hideLoading();
                 mGifView.showLoadingIndicator(false);
                 mGifView.showShots(gifs);
-
-                Log.e(TAG, "gifs: " + gifs);
-
             }
 
             @Override

@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/detail_iv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        fresco:viewAspectRatio="1.33"/>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/detail_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/shot_detail_pb"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"/>
+
+</FrameLayout>

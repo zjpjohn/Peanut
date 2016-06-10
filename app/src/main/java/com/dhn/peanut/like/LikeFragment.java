@@ -13,12 +13,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dhn.library.HourglassLoadingView;
+import com.dhn.peanut.PeanutApplication;
 import com.dhn.peanut.R;
 import com.dhn.peanut.data.LikedShot;
 import com.dhn.peanut.data.Shot;
 import com.dhn.peanut.shotdetail.ShotDetailActivity;
 import com.dhn.peanut.util.Log;
 import com.dhn.peanut.view.AutoLoadRecyclerView;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.List;
 
@@ -60,6 +62,13 @@ public class LikeFragment extends Fragment implements LikeContract.View{
         initView();
 
         mPresenter.loadLikes();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = PeanutApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
     }
 
     private void initView() {

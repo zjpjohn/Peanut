@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -41,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
     WebView mWebView;
     @BindView(R.id.login_progress)
     ProgressBar mLoading;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     private SharedPreferences dribblePrefer;
 
@@ -55,7 +58,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initView() {
-
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.black));
+        mToolbar.setTitle("LOGIN");
+        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationIcon(R.drawable.arrow_left);
 
         dribblePrefer = PreferenceManager.getDefaultSharedPreferences(this);
         String token = dribblePrefer.getString(PeanutInfo.PREFERENCE_TOKEN, null);

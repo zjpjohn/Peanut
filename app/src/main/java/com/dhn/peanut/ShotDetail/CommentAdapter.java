@@ -12,6 +12,11 @@ import android.widget.TextView;
 import com.dhn.peanut.R;
 import com.dhn.peanut.data.Comment;
 import com.dhn.peanut.data.Shot;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.drawable.ProgressBarDrawable;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -33,9 +38,15 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
     }
 
     public void replaceComments(List<Comment> data) {
+        //添加图片
+        Comment headerPic = new Comment();
+        headerPic.setType(Comment.HEADER_PIC);
+        comments.add(headerPic);
+        //添加图片介绍
         Comment header = new Comment();
         header.setType(Comment.HEADER);
         comments.add(header);
+        //评论
         comments.addAll(data);
         notifyDataSetChanged();
     }
@@ -46,9 +57,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
         if (viewType == Comment.NORNAL) {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_comment, parent, false);
             view.setTag("normal");
-        } else {
+        } else if (viewType == Comment.HEADER){
             view = LayoutInflater.from(mContext).inflate(R.layout.item_comment_head, parent, false);
             view.setTag("header");
+        } else {
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_comment_pic, parent, false);
+            view.setTag("pic");
         }
 
         return new CommentHolder(view);
@@ -60,16 +74,28 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
         if (comment.getType() == Comment.NORNAL) {
             holder.name.setText(comment.getUser().getUsername());
             holder.content.setText(Html.fromHtml(comment.getBody()));
-            //TODO 设置头像
+            //设置头像
             Uri uri = Uri.parse(comment.getUser().getAvatar_url());
             holder.commenterPic.setImageURI(uri);
-        } else {
+        } else if (comment.getType() == comment.HEADER){
             holder.commentTitle.setText(shot.getTitle());
             String desc = shot.getDescription() != null ? shot.getDescription() : "";
             holder.commentDesc.setText(Html.fromHtml(desc));
             Uri uri = Uri.parse(shot.getUser().getAvatar_url());
             holder.authorPic.setImageURI(uri);
             holder.authorName.setText(shot.getUser().getUsername());
+        } else {
+            Uri uri = Uri.parse(shot.getImages().getNormal());
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setUri(uri)
+                    .setAutoPlayAnimations(true)
+                    .build();
+            GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(mContext.getResources());
+            GenericDraweeHierarchy hierarchy = builder
+                    .setProgressBarImage(new ProgressBarDrawable())
+                    .build();
+            holder.draweeView.setController(controller);
+            holder.draweeView.setHierarchy(hierarchy);
         }
     }
 
@@ -86,7 +112,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
 
     class CommentHolder extends RecyclerView.ViewHolder {
 
+        SimpleDraweeView draweeView;
 
+        //comments
         TextView name;
         TextView content;
         SimpleDraweeView commenterPic;
@@ -103,11 +131,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
                 name = (TextView) itemView.findViewById(R.id.item_commenter_name);
                 content = (TextView) itemView.findViewById(R.id.item_comment_content);
                 commenterPic = (SimpleDraweeView) itemView.findViewById(R.id.item_commenter_pic);
-            } else {
+            } else if (itemView.getTag().equals("header")){
                 commentTitle = (TextView) itemView.findViewById(R.id.comment_title);
                 commentDesc  = (TextView) itemView.findViewById(R.id.commnet_desc);
                 authorPic = (SimpleDraweeView) itemView.findViewById(R.id.author_pic);
                 authorName = (TextView) itemView.findViewById(R.id.author_name);
+            } else {
+                draweeView = (SimpleDraweeView) itemView.findViewById(R.id.detail_iv);
             }
 
         }

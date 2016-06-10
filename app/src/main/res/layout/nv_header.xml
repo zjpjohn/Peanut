@@ -16,8 +16,9 @@
         android:id="@+id/header_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Haonan Dai"
+        android:text="Login"
         android:textSize="18sp"
+        android:textColor="@color/white"
         android:layout_below="@+id/header_draweeview"
         android:layout_margin="20dp"/>
 </RelativeLayout>

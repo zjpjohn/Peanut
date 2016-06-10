@@ -79,7 +79,12 @@ class ShotAdapter extends RecyclerView.Adapter<ShotAdapter.Holder> {
                     .setUri(picUri)
                     .setAutoPlayAnimations(true)
                     .build();
+            GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(context.getResources());
+            GenericDraweeHierarchy hierarchy = builder
+                    .setProgressBarImage(new ProgressBarDrawable())
+                    .build();
             holder.draweeView.setController(controller);
+            holder.draweeView.setHierarchy(hierarchy);
 
             holder.draweeView.setOnClickListener(new View.OnClickListener() {
                 @Override

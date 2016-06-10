@@ -45,7 +45,7 @@ public class LikeDataSource {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-
+                            loadLikeCallback.onDataNotAvailable();
                         }
                     }
             );

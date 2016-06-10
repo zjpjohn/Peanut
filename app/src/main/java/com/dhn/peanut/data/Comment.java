@@ -14,6 +14,7 @@ public class Comment implements Serializable {
 
     public static final int NORNAL = 0;
     public static final int HEADER = 1;
+    public static final int HEADER_PIC = 2;
 
     private int id;
     private String body;

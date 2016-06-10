@@ -11,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dhn.library.HourglassLoadingView;
+import com.dhn.peanut.PeanutApplication;
 import com.dhn.peanut.R;
 import com.dhn.peanut.shotdetail.ShotDetailActivity;
 import com.dhn.peanut.view.AutoLoadRecyclerView;
 import com.dhn.peanut.data.Shot;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.List;
 
@@ -50,6 +52,13 @@ public class BaseFragment extends Fragment implements ShotsContract.View {
 
         initView();
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = PeanutApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
     }
 
     protected void initView() {

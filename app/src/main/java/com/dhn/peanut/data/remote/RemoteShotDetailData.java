@@ -43,14 +43,14 @@ public class RemoteShotDetailData implements ShotDetailDataSource {
         RequestManager.addRequest(new Requet4Comments(url, new Response.Listener<List<Comment>>() {
             @Override
             public void onResponse(List<Comment> response) {
-                Log.e("remote", response.toString());
+
                 commentCallBack.onCommentLoaded(response);
             }
         },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        commentCallBack.onCommentNotAvailable();
                     }
                 }), null);
     }

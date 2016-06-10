@@ -18,6 +18,16 @@ public class Shot implements Serializable{
     private int likes_count;
     private int comments_count;
     private String created_at;
+
+    public String getHtml_url() {
+        return html_url;
+    }
+
+    public void setHtml_url(String html_url) {
+        this.html_url = html_url;
+    }
+
+    private String html_url;
     private boolean animated;
     private User user;
 

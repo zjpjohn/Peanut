@@ -12,14 +12,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.dhn.peanut.PeanutApplication;
 import com.dhn.peanut.R;
 import com.dhn.peanut.data.Comment;
 import com.dhn.peanut.data.Shot;
+import com.dhn.peanut.util.ShareUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.List;
 
@@ -28,8 +32,8 @@ import java.util.List;
  */
 public class ShotDetailFragment extends Fragment implements ShotDetailContract.View{
 
-    private SimpleDraweeView mDraweeView;
     private RecyclerView mRecyclerView;
+    private ProgressBar mProgressBar;
     private Menu mMenu;
 
     private Shot mShot;
@@ -62,7 +66,7 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shot_detail, container, false);
-        mDraweeView = (SimpleDraweeView) view.findViewById(R.id.detail_iv);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.shot_detail_pb);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.detail_recyclerview);
         return view;
     }
@@ -74,14 +78,19 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
 
         //show data in view
         mPresenter.loadComment(mShot.getId());
-        showPicture();
-        showPicInfor();
         mRecyclerView.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mPresenter.checkLiked(mShot.getId());
             }
-        }, 1000);
+        }, 500);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = PeanutApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
     }
 
     private void initView() {
@@ -101,19 +110,17 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
     }
 
     @Override
-    public void showPicture() {
-        Uri uri = Uri.parse(mShot.getImages().getNormal());
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setUri(uri)
-                .setAutoPlayAnimations(true)
-                .build();
-        mDraweeView.setController(controller);
+    public void showProgress() {
+        mRecyclerView.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void showPicInfor() {
-
+    public void hideProgress() {
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
     }
+
 
     @Override
     public void showLike() {
@@ -123,6 +130,11 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
     @Override
     public void showUnLike() {
         mMenu.findItem(R.id.menu_like).setIcon(R.drawable.heart_outline);
+    }
+
+    @Override
+    public void showToast(String text) {
+        Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -138,10 +150,9 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
         switch (item.getItemId()) {
             case R.id.menu_share:
                 //TODO
-                Toast.makeText(getActivity(), "in develop", Toast.LENGTH_SHORT).show();
+                ShareUtil.shareText(getActivity(), mShot.getHtml_url());
                 break;
             case R.id.menu_like:
-                //TODO
                 mPresenter.changeLike(mShot.getId());
                 break;
         }

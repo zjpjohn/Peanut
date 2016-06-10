@@ -14,6 +14,9 @@ import com.dhn.peanut.R;
 import com.dhn.peanut.data.LikedShot;
 import com.dhn.peanut.data.Shot;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.drawable.ProgressBarDrawable;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -56,7 +59,12 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeHolder> {
                 .setUri(picUri)
                 .setAutoPlayAnimations(true)
                 .build();
+        GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(context.getResources());
+        GenericDraweeHierarchy hierarchy = builder
+                .setProgressBarImage(new ProgressBarDrawable())
+                .build();
         holder.draweeView.setController(controller);
+        holder.draweeView.setHierarchy(hierarchy);
 
         holder.draweeView.setOnClickListener(new View.OnClickListener() {
             @Override
