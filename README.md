@@ -1,7 +1,7 @@
 # Dribble-MVP Android客户端
 * * *
-## Panut
-这是一款基于Fresco, Volly, MVP架构快速开发的[https://dribbble.com](https://dribbble.com/)第三方客户端。
+## Peanut
+这是一款基于Fresco, Volley, MVP架构快速开发的[https://dribbble.com](https://dribbble.com/)第三方客户端。
 目前完成的功能：
 - 浏览Shots, Debuts, Gifs等模块
 - 登陆，与网站同步数据
