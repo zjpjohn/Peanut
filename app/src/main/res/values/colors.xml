@@ -6,4 +6,5 @@
     <color name="image_placeholder">#ff313131</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="main_back">#ffeeeeee</color>
 </resources>
