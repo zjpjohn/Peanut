@@ -22,8 +22,8 @@
 - 使用自定义Loading动画[HourglassLoadingView](https://github.com/gatsbydhn/HourglassLoadingView)
 
 ##下载
-360应用商店：
-![apk下载](https://github.com/gatsbydhn/Peanut/blob/master/app/app-release.apk)
+360应用商店下载
+[apk下载](https://github.com/gatsbydhn/Peanut/blob/master/app/app-release.apk)
 
 ##截图
 ![主页](https://github.com/gatsbydhn/Peanut/blob/master/image/shot1.png)
