@@ -8,10 +8,9 @@
 - 分享
 - 收藏
 
-未完成的功能：
+后期的工作：
 - 关键字搜索
 - 发表评论
-- 发表作品
 - 离线缓存
 
 ##亮点：
@@ -23,6 +22,7 @@
 
 ##下载
 360应用商店下载
+
 [apk下载](https://github.com/gatsbydhn/Peanut/blob/master/app/app-release.apk)
 
 ##截图
