@@ -17,6 +17,7 @@ import com.dhn.peanut.shotdetail.ShotDetailActivity;
 import com.dhn.peanut.view.AutoLoadRecyclerView;
 import com.dhn.peanut.data.Shot;
 import com.squareup.leakcanary.RefWatcher;
+import com.victor.loading.rotate.RotateLoading;
 
 import java.util.List;
 
@@ -31,8 +32,8 @@ public class BaseFragment extends Fragment implements ShotsContract.View {
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recyclerview)
     AutoLoadRecyclerView mRecyclerView;
-    @BindView(R.id.loading)
-    HourglassLoadingView mLoadingView;
+    @BindView(R.id.rotateloading)
+    RotateLoading mLoadingView;
 
     private ShotAdapter shotAdapter;
     protected ShotsContract.Presenter mPresenter;
@@ -100,16 +101,16 @@ public class BaseFragment extends Fragment implements ShotsContract.View {
 
     @Override
     public void showLoading() {
-        mLoadingView.setVisibility(View.VISIBLE);
-        mRecyclerView.setVisibility(View.GONE);
         mLoadingView.start();
+        mRecyclerView.setVisibility(View.GONE);
     }
 
     @Override
     public void hideLoading() {
-        mLoadingView.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        mLoadingView.stop();
+        if (mLoadingView.isStart()) {
+            mLoadingView.stop();
+        }
     }
 
 

@@ -1,7 +1,5 @@
 package com.dhn.peanut.data.remote;
 
-import android.util.Log;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -16,7 +14,6 @@ import com.dhn.peanut.util.Requet4Comments;
 
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +54,7 @@ public class RemoteShotDetailData implements ShotDetailDataSource {
 
     @Override
     public void checkIfLike(int shotId, final LoadShotDetailCallBack loadShotDetailCallBack) {
-        String url = PeanutInfo.REQUEST_ON_SHOT_URL + shotId + "/" + "like";
+        String url = PeanutInfo.URL_REQUEST_ON_SHOT + shotId + "/" + "like";
         final String token = AuthoUtil.getToken();
 
         if (token == null) {
@@ -94,7 +91,7 @@ public class RemoteShotDetailData implements ShotDetailDataSource {
 
     @Override
     public void changeLike(int shotId, boolean isLike) {
-        String url = PeanutInfo.REQUEST_ON_SHOT_URL + shotId + "/" + "like";
+        String url = PeanutInfo.URL_REQUEST_ON_SHOT + shotId + "/" + "like";
         final String token = AuthoUtil.getToken();
 
         if (token == null) {

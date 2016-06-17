@@ -5,6 +5,7 @@ import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.dhn.peanut.data.Shot;
+import com.dhn.peanut.data.base.LoadShotsCallback;
 import com.dhn.peanut.data.base.ShotDataSource;
 import com.dhn.peanut.util.Request4Shots;
 import com.dhn.peanut.util.RequestManager;

@@ -1,4 +1,4 @@
-package com.dhn.peanut.shots;
+package com.dhn.peanut.profile;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,24 +6,22 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.dhn.peanut.R;
 import com.dhn.peanut.data.Shot;
-import com.dhn.peanut.profile.ProfileActivity;
+import com.dhn.peanut.data.base.ProfileDataSource;
+import com.dhn.peanut.shotdetail.ShotDetailActivity;
+import com.dhn.peanut.util.AuthoUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
-import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.DraweeView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -31,85 +29,66 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Optional;
 
 /**
- * Created by DHN on 2016/5/31.
+ * Created by DHN on 2016/6/15.
  */
-class ShotAdapter extends RecyclerView.Adapter<ShotAdapter.Holder> {
+public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileHolder> {
 
-    private List<Shot> data;
+
     private Context context;
-    private ShotsContract.View mView;
-
-    public static final int TYPE_ITEM = 0;
-    public static final int TYPE_FOOTER = 1;
-
-    private int lastPosition = -1;
+    private Shot.User user;
+    private List<Shot> data;
     private boolean isShowFooter = true;
+    private boolean firstIn = true;
 
-
-    public ShotAdapter(Context context, ShotsContract.View view) {
-        data = new ArrayList<>();
+    ProfileAdapter(Context context, Shot.User user) {
         this.context = context;
-        this.mView = view;
+        this.user = user;
+        data = new ArrayList<>();
     }
 
-    //设置是否显示footer
     public void setShowFooter(boolean isShowFooter) {
         this.isShowFooter = isShowFooter;
         notifyDataSetChanged();
     }
 
-    public void relpaceData(List<Shot> data) {
-        this.data = data;
+    public void replaceData(List<Shot> shots) {
+        if (firstIn) {
+            Shot header = new Shot();
+            header.setType(Shot.TYPE_HEADER);
+            data.add(header);
+            firstIn = false;
+        }
+
+        data.addAll(shots);
         notifyDataSetChanged();
-
-    }
-
-    protected void setAnimation(View viewToAnimate, int position) {
-        if (position > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R
-                    .anim.item_bottom_in);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
-        }
     }
 
     @Override
-    public void onViewDetachedFromWindow(Holder holder) {
-        super.onViewDetachedFromWindow(holder);
-        if (holder.cardview != null) {
-            holder.cardview.clearAnimation();
-        }
-    }
-
-    @Override
-    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProfileHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        if (viewType == TYPE_ITEM) {
+        if (viewType == Shot.TYPE_ITEM) {
             view = LayoutInflater.from(context).inflate(R.layout.item_shot, parent, false);
+        } else if (viewType == Shot.TYPE_HEADER){
+            view = LayoutInflater.from(context).inflate(R.layout.item_user_profile, parent, false);
         } else {
             view = LayoutInflater.from(context).inflate(R.layout.recyclerview_footer, parent, false);
         }
-        return new Holder(view);
+        return new ProfileHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, int position) {
-        if (getItemViewType(position) == TYPE_ITEM) {
-            final Shot shot = data.get(position);
-            Uri avatarUri = Uri.parse(shot.getUser().getAvatar_url());
-            holder.avatarView.setImageURI(avatarUri);
-            holder.avatarView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ProfileActivity.class);
-                    intent.putExtra("user", shot.getUser());
-                    context.startActivity(intent);
-                }
-            });
+    public void onBindViewHolder(ProfileHolder holder, int position) {
 
+        if (getItemViewType(position) == Shot.TYPE_ITEM) {
+
+            final Shot shot = data.get(position);
+            //作者头像
+            Uri avatarUri = Uri.parse(user.getAvatar_url());
+            holder.avatarView.setImageURI(avatarUri);
+
+            //作品
             Uri picUri = Uri.parse(shot.getImages().getNormal());
             DraweeController controller = Fresco.newDraweeControllerBuilder()
                     .setUri(picUri)
@@ -125,21 +104,35 @@ class ShotAdapter extends RecyclerView.Adapter<ShotAdapter.Holder> {
             holder.draweeView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mView.showShotDetails(shot);
+                    Intent intent = new Intent(context, ShotDetailActivity.class);
+                    shot.setUser(user);
+                    intent.putExtra("shot", shot);
+                    context.startActivity(intent);
                 }
             });
 
-            holder.name.setText(shot.getUser().getUsername());
+            //作者名称、阅读次数
+            holder.name.setText(user.getUsername());
             holder.like.setText("" + shot.getLikes_count());
             holder.views.setText("" + shot.getViews_count());
             holder.comments.setText("" + shot.getComments_count());
 
-            setAnimation(holder.cardview, position);
 
-        } else if (getItemViewType(position) == TYPE_FOOTER) {
-            //do nothing
+        } else if (getItemViewType(position) == Shot.TYPE_HEADER){
+            //头像
+            Uri avatarUri = Uri.parse(user.getAvatar_url());
+            holder.header_avatar.setImageURI(avatarUri);
+
+            //following, follower, location
+            holder.tvName.setText(user.getUsername());
+            holder.tvFollowingCount.setText("" + user.getFollowings_count());
+            holder.tvFollowerCount.setText("" + user.getFollowers_count());
+            holder.tvLocation.setText(user.getLocation());
+
+            //
+        } else {
+            //Footer, do nothing
         }
-
     }
 
     @Override
@@ -149,22 +142,20 @@ class ShotAdapter extends RecyclerView.Adapter<ShotAdapter.Holder> {
         } else {
             return data.size();
         }
+
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (isShowFooter) {
-            if (position + 1 == getItemCount()) {
-                return TYPE_FOOTER;
-            } else {
-                return TYPE_ITEM;
-            }
-        } else {
-            return TYPE_ITEM;
+        if (position == data.size()) {
+            return Shot.TYPE_ROOTER;
+        } {
+            return data.get(position).getType();
         }
     }
 
-    class Holder extends RecyclerView.ViewHolder {
+    class ProfileHolder extends RecyclerView.ViewHolder {
+        //item
         @Nullable
         @BindView(R.id.shot_avatar)
         SimpleDraweeView avatarView;
@@ -187,11 +178,27 @@ class ShotAdapter extends RecyclerView.Adapter<ShotAdapter.Holder> {
         @BindView(R.id.shot_cardview)
         CardView cardview;
 
+        //header
+        @Nullable
+        @BindView(R.id.iv_avatar)
+        SimpleDraweeView header_avatar;
+        @Nullable
+        @BindView(R.id.tv_name)
+        TextView tvName;
+        @Nullable
+        @BindView(R.id.tv_following_count)
+        TextView tvFollowingCount;
+        @Nullable
+        @BindView(R.id.tv_follower_count)
+        TextView tvFollowerCount;
+        @Nullable
+        @BindView(R.id.tv_location_content)
+        TextView tvLocation;
 
-        public Holder(View itemView) {
+        public ProfileHolder(View itemView) {
             super(itemView);
-
             ButterKnife.bind(this, itemView);
+
         }
     }
 }

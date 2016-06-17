@@ -29,7 +29,7 @@ public class Request4Shots extends Request<ArrayList<Shot>> {
 
     static {
         headers.put("Accept", "application/vnd.dribbble.v1.param+json");
-        headers.put("Authorization", "Bearer 4e3e676ce2881d166900f7f0ba4f1c0c599f3126ff426c78e61fd3fc233b2a32");
+        headers.put("Authorization", "Bearer " + PeanutInfo.CLIENT_TOLEN);
     }
 
     public Request4Shots(String url, Response.Listener<ArrayList<Shot>> listener , Response.ErrorListener errorListener) {
@@ -46,6 +46,7 @@ public class Request4Shots extends Request<ArrayList<Shot>> {
     protected Response<ArrayList<Shot>> parseNetworkResponse(NetworkResponse response) {
         try {
             String resultStr = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+
             Gson gson = new Gson();
             Type collectionType = new TypeToken<ArrayList<Shot>>(){}.getType();
             ArrayList<Shot> shots = gson.fromJson(resultStr, collectionType);

@@ -1,7 +1,6 @@
 <LinearLayout
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/main_back">
@@ -10,7 +9,6 @@
         android:id="@+id/refreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -22,16 +20,7 @@
                 android:layout_height="match_parent">
             </com.dhn.peanut.view.AutoLoadRecyclerView>
 
-
-            <com.dhn.library.HourglassLoadingView
-                android:id="@+id/loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:border_color="@color/colorPrimary"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:visibility="gone"/>
-
+            <include layout="@layout/loading"></include>
         </FrameLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

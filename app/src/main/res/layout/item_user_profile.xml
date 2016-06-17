@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_profile_user"
+    android:layout_height="330dp"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        app:roundAsCircle="true"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_avatar"
+        android:text="dhn"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_following"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Following"
+        android:layout_below="@id/tv_name"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@+id/tv_follower"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_following_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100"
+        android:layout_below="@+id/tv_following"
+        android:layout_alignLeft="@+id/tv_following"
+        android:layout_alignRight="@+id/tv_following"
+        android:gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/tv_follower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Followers"
+        android:layout_below="@id/tv_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_follower_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="332"
+        android:layout_below="@id/tv_follower"
+        android:layout_alignRight="@id/tv_follower"
+        android:layout_alignLeft="@id/tv_follower"
+        android:gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/tv_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:layout_below="@id/tv_name"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/tv_follower"
+        android:layout_marginLeft="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_location_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="beijing"
+        android:layout_below="@+id/tv_location"
+        android:layout_alignLeft="@id/tv_location"
+        android:layout_alignRight="@id/tv_location"
+        android:gravity="center_horizontal"/>
+
+</RelativeLayout>

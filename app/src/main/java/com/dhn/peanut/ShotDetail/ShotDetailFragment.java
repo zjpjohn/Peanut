@@ -24,6 +24,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.leakcanary.RefWatcher;
+import com.victor.loading.rotate.RotateLoading;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ import java.util.List;
 public class ShotDetailFragment extends Fragment implements ShotDetailContract.View{
 
     private RecyclerView mRecyclerView;
-    private ProgressBar mProgressBar;
+    private RotateLoading mLoading;
     private Menu mMenu;
 
     private Shot mShot;
@@ -57,16 +58,14 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
         if (getArguments() != null) {
             mShot = (Shot) getArguments().get("shot");
         }
-
         setHasOptionsMenu(true);
-
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shot_detail, container, false);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.shot_detail_pb);
+        mLoading = (RotateLoading) view.findViewById(R.id.rotateloading);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.detail_recyclerview);
         return view;
     }
@@ -112,13 +111,15 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
     @Override
     public void showProgress() {
         mRecyclerView.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
+        mLoading.start();
     }
 
     @Override
     public void hideProgress() {
         mRecyclerView.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.GONE);
+        if (mLoading.isStart()) {
+            mLoading.stop();
+        }
     }
 
 
@@ -149,7 +150,6 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_share:
-                //TODO
                 ShareUtil.shareText(getActivity(), mShot.getHtml_url());
                 break;
             case R.id.menu_like:

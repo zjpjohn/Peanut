@@ -10,6 +10,11 @@ public class Shot implements Serializable{
     public static final String TOKEN = "0ae9635125e0dce4cdec4ba13634f6e2f829edf06d775a330dd3c0d185302468";
     public static final String BASE_URL = "https://api.dribbble.com/v1/shots";
 
+    public static final int TYPE_HEADER = 0;
+    public static final int TYPE_ITEM = 1;
+    public static final int TYPE_ROOTER = 2;
+
+    private int type = TYPE_ITEM;
     private int id;
     private String title;
     private String description;
@@ -30,6 +35,15 @@ public class Shot implements Serializable{
     private String html_url;
     private boolean animated;
     private User user;
+
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public int getId() {
         return id;
@@ -162,6 +176,33 @@ public class Shot implements Serializable{
         private int id;
         private String username;
         private String avatar_url;
+        private int followers_count;
+        private int followings_count;
+        private String location;
+
+        public String getLocation() {
+            return location;
+        }
+
+        public void setLocation(String location) {
+            this.location = location;
+        }
+
+        public int getFollowings_count() {
+            return followings_count;
+        }
+
+        public void setFollowings_count(int followings_count) {
+            this.followings_count = followings_count;
+        }
+
+        public int getFollowers_count() {
+            return followers_count;
+        }
+
+        public void setFollowers_count(int followers_count) {
+            this.followers_count = followers_count;
+        }
 
         public String getAvatar_url() {
             return avatar_url;

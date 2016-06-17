@@ -5,6 +5,7 @@ package com.dhn.peanut.shots;
 import android.util.Log;
 
 import com.dhn.peanut.data.Shot;
+import com.dhn.peanut.data.base.LoadShotsCallback;
 import com.dhn.peanut.data.base.ShotDataSource;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public class ShotPresenter implements ShotsContract.Presenter {
             mShotView.showLoading();
         }
 
-        mShotDataSource.getShots(null, shotsPage, new ShotDataSource.LoadShotsCallback() {
+        mShotDataSource.getShots(null, shotsPage, new LoadShotsCallback() {
             @Override
             public void onShotsLoaded(List<Shot> shots) {
                 mShotView.hideLoading();
@@ -81,7 +82,7 @@ public class ShotPresenter implements ShotsContract.Presenter {
             mDebutsView.showLoading();
         }
 
-        mShotDataSource.getDebuts(null, debutsPage, new ShotDataSource.LoadShotsCallback() {
+        mShotDataSource.getDebuts(null, debutsPage, new LoadShotsCallback() {
             @Override
             public void onShotsLoaded(List<Shot> debuts) {
                 mDebutsView.hideLoading();
@@ -109,7 +110,7 @@ public class ShotPresenter implements ShotsContract.Presenter {
             mGifView.showLoading();
         }
 
-        mShotDataSource.getGifs(null, gifsPage, new ShotDataSource.LoadShotsCallback() {
+        mShotDataSource.getGifs(null, gifsPage, new LoadShotsCallback() {
             @Override
             public void onShotsLoaded(List<Shot> gifs) {
                 mGifView.hideLoading();

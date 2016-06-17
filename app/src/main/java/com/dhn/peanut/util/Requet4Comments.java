@@ -35,7 +35,7 @@ public class Requet4Comments extends Request<ArrayList<Comment>> {
 
     static {
         headers.put("Accept", "application/vnd.dribbble.v1.param+json");
-        headers.put("Authorization", "Bearer 4e3e676ce2881d166900f7f0ba4f1c0c599f3126ff426c78e61fd3fc233b2a32");
+        headers.put("Authorization", "Bearer " + PeanutInfo.CLIENT_TOLEN);
     }
 
     @Override

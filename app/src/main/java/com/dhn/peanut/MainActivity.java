@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -31,12 +30,12 @@ import com.dhn.peanut.data.remote.RemoteShotData;
 import com.dhn.peanut.like.LikeActivity;
 import com.dhn.peanut.login.LoginActivity;
 import com.dhn.peanut.profile.MeActivity;
-import com.dhn.peanut.profile.ProfileActivity;
 import com.dhn.peanut.shots.DebutsFragment;
 import com.dhn.peanut.shots.GifFragment;
 import com.dhn.peanut.shots.ShotFragment;
 import com.dhn.peanut.shots.ShotPresenter;
 import com.dhn.peanut.shots.ShotsContract;
+import com.dhn.peanut.util.AuthoUtil;
 import com.dhn.peanut.util.Log;
 import com.dhn.peanut.util.PeanutInfo;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -62,23 +61,21 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_viewpager)
     ViewPager mViewPager;
 
-
+    private SimpleDraweeView mLeftDraweeView;
+    private TextView mLeftNameTv;
     private View mHeader;
-    private TextView mHeaderNmaeTv;
     private ShotsContract.View shotFragment;
     private ShotsContract.View debutsFragment;
     private ShotsContract.View gifFragment;
     private ShotsContract.Presenter mPresenter;
     private ActionBarDrawerToggle drawerToggle;
 
-    private boolean isLogined;
     private SharedPreferences sharePre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         ButterKnife.bind(this);
 
         initData();
@@ -87,6 +84,12 @@ public class MainActivity extends AppCompatActivity {
         initNavigation();
         initViewPager();
         initTabLayout();
+
+
+        if (Log.DBG) {
+            Log.e("returned username: " + AuthoUtil.getUserName());
+            Log.e("like url = " + AuthoUtil.getLikesUrl());
+        }
     }
 
     @Override
@@ -101,14 +104,17 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                String username = data.getStringExtra("username");
+                String username = data.getStringExtra(PeanutInfo.USER_USERNAME);
+                String avatar_url = data.getStringExtra(PeanutInfo.USER_AVATAR);
 
                 if (Log.DBG) {
-                    Log.e("returned username: " + username);
+                    Log.e("returned username: " + AuthoUtil.getUserName());
+                    Log.e("like url = " + AuthoUtil.getLikesUrl());
                 }
 
-                isLogined = true;
-                mHeaderNmaeTv.setText(username);
+                mLeftNameTv.setText(username);
+                Uri uri = Uri.parse(avatar_url);
+                mLeftDraweeView.setImageURI(uri);
             }
         }
     }
@@ -120,11 +126,6 @@ public class MainActivity extends AppCompatActivity {
         gifFragment = GifFragment.newInstance();
         mPresenter = new ShotPresenter(shotFragment, debutsFragment, gifFragment, RemoteShotData.getInstance());
 
-        sharePre = PreferenceManager.getDefaultSharedPreferences(this);
-        isLogined = sharePre.getBoolean(PeanutInfo.PREFERENCE_USER_LOGINED, false);
-        if (Log.DBG) {
-            Log.e("isLogined = " + isLogined);
-        }
 
     }
 
@@ -161,37 +162,43 @@ public class MainActivity extends AppCompatActivity {
 
                         item.setChecked(true);
                         mDrawerLayout.closeDrawers();
-                        mDrawerLayout.closeDrawers();
                         return true;
                     }
                 });
 
         //header
         mHeader = mNavigationView.getHeaderView(0);
-        mHeaderNmaeTv = (TextView) mHeader.findViewById(R.id.header_username);
+        mLeftNameTv = (TextView) mHeader.findViewById(R.id.header_username);
+        mLeftDraweeView = (SimpleDraweeView) mHeader.findViewById(R.id.header_draweeview);
 
-        if (isLogined) {
-            String username = sharePre.getString(PeanutInfo.PREFERENCE_USER_NAME, "YOUR NAME");
-            mHeaderNmaeTv.setText(username);
+        if (AuthoUtil.isLogined()) {
+            String username = AuthoUtil.getUserName();
+            String avatar_url = AuthoUtil.getUserAvatar();
+            mLeftNameTv.setText(username);
+            mLeftDraweeView.setImageURI(Uri.parse(avatar_url));
+        } else {
+            mLeftNameTv.setText("请登录");
+            Uri uri = Uri.parse("res://com.dhn.peanut/" + R.drawable.avatar);
+            mLeftDraweeView.setImageURI(uri);
         }
 
         mHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (!isLogined) {
+                if (!AuthoUtil.isLogined()) {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivityForResult(intent, REQUEST_CODE);
                 } else {
-                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                    startActivity(intent);
+                    //TODO
+                    Log.e("isLogined: " + AuthoUtil.isLogined());
+                    Log.e("用户名：" + AuthoUtil.getUserName());
+                    Log.e("token: " + AuthoUtil.getToken());
+                    Log.e("like url" + AuthoUtil.getLikesUrl());
                 }
 
             }
         });
-        SimpleDraweeView profileView = (SimpleDraweeView) mHeader.findViewById(R.id.header_draweeview);
-        Uri uri = Uri.parse("res://com.dhn.peanut/" + R.drawable.avatar);
-        profileView.setImageURI(uri);
     }
 
     private void initViewPager() {
@@ -230,7 +237,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         }
-
         return super.onKeyDown(keyCode, event);
     }
 

@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="@drawable/profile_bg"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/profile_pic"
-        android:layout_centerHorizontal="true"
-        android:layout_height="100dp"
-        android:layout_width="100dp"
-        app:roundAsCircle="true"
-        android:layout_marginTop="180dp"/>
+    <include layout="@layout/toolbar"></include>
 
-    <TextView
-        android:id="@+id/profile_name"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="YOUR NAME"
-        android:textSize="20sp"
-        android:layout_below="@id/profile_pic"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_back">
 
-</RelativeLayout>
+        <com.dhn.peanut.view.AutoLoadRecyclerView
+            android:id="@+id/user_info_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </com.dhn.peanut.view.AutoLoadRecyclerView>
+
+        <include layout="@layout/loading"></include>
+    </FrameLayout>
+
+</LinearLayout>
 

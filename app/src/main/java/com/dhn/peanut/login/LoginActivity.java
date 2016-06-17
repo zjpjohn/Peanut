@@ -4,12 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
@@ -23,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.dhn.peanut.R;
+import com.dhn.peanut.util.AuthoUtil;
 import com.dhn.peanut.util.Log;
 import com.dhn.peanut.util.PeanutInfo;
 import com.dhn.peanut.util.RequestManager;
@@ -43,10 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     WebView mWebView;
     @BindView(R.id.login_progress)
     ProgressBar mLoading;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-
-    private SharedPreferences dribblePrefer;
 
 
     @Override
@@ -59,14 +53,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitleTextColor(getResources().getColor(R.color.black));
-        mToolbar.setTitle("LOGIN");
-        setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.arrow_left);
-
-        dribblePrefer = PreferenceManager.getDefaultSharedPreferences(this);
-        String token = dribblePrefer.getString(PeanutInfo.PREFERENCE_TOKEN, null);
+        //获取token
+        String token = AuthoUtil.getToken();
 
         if (TextUtils.isEmpty(token)) {
             //进行验证
@@ -75,8 +63,6 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             mLoading.setVisibility(View.VISIBLE);
-
-            CookieManager.getInstance().removeAllCookie();
 
             //配置webview属性
             mWebView.setWebViewClient(new WebViewClient() {
@@ -96,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                             //获取token
                             requestForAccessToken(code);
                         } else {
-                            Toast.makeText(LoginActivity.this, "error, code is empty", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "出错啦，code为空", Toast.LENGTH_SHORT).show();
                         }
 
                         //忽略发送从定向url的请求
@@ -158,23 +144,17 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i(response.toString());
+
                         try {
                             //保存token
                             String accessToken = (String) response.get("access_token");
+                            AuthoUtil.putToken(accessToken);
 
-                            SharedPreferences.Editor editor = dribblePrefer.edit();
-                            editor.putString(PeanutInfo.PREFERENCE_TOKEN, accessToken);
-                            editor.commit();
-
-                            if (Log.DBG) {
-                                Log.e("token:" + accessToken);
-                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                        Toast.makeText(LoginActivity.this, "Authorization success", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "授权成功", Toast.LENGTH_LONG).show();
                         CookieManager.getInstance().removeAllCookie();
                         onCompleteAuth();
                     }
@@ -182,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(LoginActivity.this, "error, get token failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "出错啦，获取token失败", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -195,12 +175,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void fetchUserInfo() {
-        final String token = dribblePrefer.getString(PeanutInfo.PREFERENCE_TOKEN, null);
+        final String token = AuthoUtil.getToken();
 
         if (token == null) {
-            Toast.makeText(LoginActivity.this, "error, token is null", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "出错啦，token为空", Toast.LENGTH_SHORT).show();
         } else {
-            String url = PeanutInfo.MY_INFO_URL;
+            String url = PeanutInfo.URL_MY_INFO;
 
             JsonObjectRequest profileRequest = new JsonObjectRequest(
                     Request.Method.GET,
@@ -211,24 +191,24 @@ public class LoginActivity extends AppCompatActivity {
                             //保存用户信息
                             saveProfile(response);
 
-
                             //返回数据
-                            String username = "Dai";
+                            String username = "";
+                            String avatar_url = "";
                             try {
-                                username = response.getString("username");
+                                username = response.getString(PeanutInfo.USER_USERNAME);
+                                avatar_url = response.getString(PeanutInfo.USER_AVATAR);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            Intent returnIntent = new Intent();
-                            returnIntent.putExtra("username", username);
-                            setResult(Activity.RESULT_OK, returnIntent);
-                            finish();
+
+                            //返回用户名和头像地址
+                            returnValue(username, avatar_url);
                         }
                     },
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(LoginActivity.this, "error, get user data failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "获取token失败", Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -247,41 +227,35 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private void returnValue(String username, String avatar_url) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(PeanutInfo.USER_USERNAME, username);
+        returnIntent.putExtra(PeanutInfo.USER_AVATAR, avatar_url);
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
+
     private void saveProfile(JSONObject response) {
         try {
-            int id = response.getInt("id");
-            String userName = response.getString("username");
+            String userName = response.getString(PeanutInfo.USER_USERNAME);
 
-            dribblePrefer.edit().putInt(PeanutInfo.PREFERENCE_USER_ID, response.getInt("id")).commit();
-            dribblePrefer.edit().putString(PeanutInfo.PREFERENCE_USER_NAME, response.getString("username")).commit();
-            dribblePrefer.edit().putString(PeanutInfo.PREFERENCE_USER_AVATAR, response.getString("avatar_url")).commit();
-            dribblePrefer.edit().putString(PeanutInfo.PREFERENCE_USER_LIKE_URL, response.getString("likes_url")).commit();
-            dribblePrefer.edit().putInt(PeanutInfo.PREFERENCE_USER_LIKES, response.getInt("likes_count")).commit();
-            dribblePrefer.edit().putBoolean(PeanutInfo.PREFERENCE_USER_LOGINED, true).commit();
+            AuthoUtil.putId(response.getInt("id"));
+            AuthoUtil.putUserName(response.getString("username"));
+            AuthoUtil.putUserAvatar(response.getString("avatar_url"));
+            AuthoUtil.putLikeUrl(response.getString("likes_url"));
+            AuthoUtil.putLikesCount(response.getInt("likes_count"));
 
-            if (Log.DBG) {
-                Log.e("id=" + dribblePrefer.getInt(PeanutInfo.PREFERENCE_USER_ID, 0) + " username=" + userName);
-                Log.e("isLogined = " + dribblePrefer.getBoolean(PeanutInfo.PREFERENCE_USER_LOGINED, false));
-            }
+            Log.e("id=" + AuthoUtil.getId() + " username=" + userName);
+            Log.e("isLogined = " + AuthoUtil.isLogined());
+            Log.e("avatar_url = " + AuthoUtil.getUserAvatar());
+            Log.e(("likes_count = " + AuthoUtil.getLikesCount()));
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
 
-        //左上角返回按钮
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-
-    }
 
 }
