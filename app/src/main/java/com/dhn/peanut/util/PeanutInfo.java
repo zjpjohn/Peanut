@@ -26,7 +26,7 @@ public class PeanutInfo {
     //请求数据接口
     public static final String URL_BASE = "https://api.dribbble.com/v1";
     public static final String URL_MY_INFO = "https://api.dribbble.com/v1/user";
-    public static final String URL_REQUEST_ON_SHOT = URL_BASE + "/shots";
+    public static final String URL_REQUEST_ON_SHOT = URL_BASE + "/shots/";
     public static final String URL_USER_SHOTS_BASE = URL_BASE + "/users";
     public static final String URL_CHECK_FOLLOWING_BASE = URL_BASE + "/user/following/";
     public static final String URL_FOLLOW_BASE = URL_BASE + "/users/";

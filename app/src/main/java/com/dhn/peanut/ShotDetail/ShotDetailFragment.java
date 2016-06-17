@@ -19,6 +19,7 @@ import com.dhn.peanut.PeanutApplication;
 import com.dhn.peanut.R;
 import com.dhn.peanut.data.Comment;
 import com.dhn.peanut.data.Shot;
+import com.dhn.peanut.util.AuthoUtil;
 import com.dhn.peanut.util.ShareUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
@@ -153,7 +154,11 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
                 ShareUtil.shareText(getActivity(), mShot.getHtml_url());
                 break;
             case R.id.menu_like:
-                mPresenter.changeLike(mShot.getId());
+                if (!AuthoUtil.isLogined()) {
+                    Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                } else {
+                    mPresenter.changeLike(mShot.getId());
+                }
                 break;
         }
         return true;

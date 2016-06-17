@@ -190,8 +190,6 @@ public class ProfileActivity extends AppCompatActivity {
             return true;
         } else if (item.getItemId() == R.id.menu_follow) {
 
-            Log.e("点击follow按钮");
-
             if (!AuthoUtil.isLogined()) {
                 Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
             } else {
@@ -228,8 +226,4 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-
-    private void changeFollowState() {
-
-    }
 }

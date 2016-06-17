@@ -1,5 +1,7 @@
 package com.dhn.peanut.data.remote;
 
+import android.widget.Toast;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -94,36 +96,32 @@ public class RemoteShotDetailData implements ShotDetailDataSource {
         String url = PeanutInfo.URL_REQUEST_ON_SHOT + shotId + "/" + "like";
         final String token = AuthoUtil.getToken();
 
-        if (token == null) {
-            //TODO
-            com.dhn.peanut.util.Log.e("先登录");
-        } else {
-            JsonObjectRequest request = new JsonObjectRequest(
-                    isLike ? Request.Method.POST : Request.Method.DELETE,
-                    url,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
+        JsonObjectRequest request = new JsonObjectRequest(
+                isLike ? Request.Method.POST : Request.Method.DELETE,
+                url,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
 
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
                     }
-            ) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> header = new HashMap<>();
-                    header.put(PeanutInfo.HEAD_AUTH_FILED, PeanutInfo.HEAD_BEAR + token);
-                    header.putAll(super.getHeaders());
-                    return header;
-                }
-            };
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-            RequestManager.addRequest(request, null);
-        }
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> header = new HashMap<>();
+                header.put(PeanutInfo.HEAD_AUTH_FILED, PeanutInfo.HEAD_BEAR + token);
+                header.putAll(super.getHeaders());
+                return header;
+            }
+        };
+
+        RequestManager.addRequest(request, null);
+
     }
 }
