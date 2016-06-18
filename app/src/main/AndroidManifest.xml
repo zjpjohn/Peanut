@@ -17,6 +17,7 @@
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -39,6 +40,10 @@
         <activity
             android:name=".profile.MeActivity"
             android:label="@string/title_activity_me"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".following.FollowingActivity"
+            android:label="@string/title_activity_following"
             android:theme="@style/AppTheme"></activity>
     </application>
 

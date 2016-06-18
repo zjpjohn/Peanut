@@ -3,10 +3,14 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_like"
-            android:title="LIKED" />
+            android:title="喜欢" />
+
+        <item
+            android:id="@+id/menu_following"
+            android:title="关注者"></item>
 
         <item
             android:id="@+id/menu_me"
-            android:title="ABOUT ME" />
+            android:title="开发者" />
     </group>
 </menu>

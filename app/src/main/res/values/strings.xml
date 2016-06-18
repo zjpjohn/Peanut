@@ -12,4 +12,5 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="title_activity_like">LikeActivity</string>
     <string name="title_activity_me">MeActivity</string>
+    <string name="title_activity_following">FollowingActivity</string>
 </resources>

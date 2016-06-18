@@ -23,7 +23,7 @@ public class LikeDataSource {
     }
 
     public void getLikes(final LoadLikeCallback loadLikeCallback) {
-        String url = AuthoUtil.getLikesUrl();
+        String url = AuthoUtil.getLikesUrl() + "?per_page=100";
 
         if (Log.DBG) {
             Log.e("liked url = " + url);

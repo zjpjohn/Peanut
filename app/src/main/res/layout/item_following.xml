@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_height="150dp"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdv_following"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:roundAsCircle="true"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/tv_follower_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Joe Furr"
+        android:textSize="18sp"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@+id/sdv_following"
+        android:layout_alignTop="@+id/sdv_following"/>
+
+    <TextView
+        android:id="@+id/tv_follower_bio"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/sdv_following"
+        android:layout_below="@+id/tv_follower_name"
+        android:text="We are Design and Animation studio that makes stories coma alive"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="5dp"
+        android:maxLines="3"/>
+
+    <TextView
+        android:id="@+id/tv_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="Detail"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/detail_btn_back"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/grey"></View>
+
+</RelativeLayout>

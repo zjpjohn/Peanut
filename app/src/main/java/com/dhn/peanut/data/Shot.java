@@ -179,6 +179,15 @@ public class Shot implements Serializable{
         private int followers_count;
         private int followings_count;
         private String location;
+        private String bio;
+
+        public String getBio() {
+            return bio;
+        }
+
+        public void setBio(String bio) {
+            this.bio = bio;
+        }
 
         public String getLocation() {
             return location;

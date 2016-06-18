@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dhn.peanut.data.remote.RemoteShotData;
+import com.dhn.peanut.following.FollowingActivity;
 import com.dhn.peanut.like.LikeActivity;
 import com.dhn.peanut.login.LoginActivity;
 import com.dhn.peanut.profile.MeActivity;
@@ -152,6 +153,9 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.menu_like:
                                 Intent intent = new Intent(MainActivity.this, LikeActivity.class);
                                 startActivity(intent);
+                                break;
+                            case R.id.menu_following:
+                                startActivity(new Intent(MainActivity.this, FollowingActivity.class));
                                 break;
                             case R.id.menu_me:
                                 startActivity(new Intent(MainActivity.this, MeActivity.class));
