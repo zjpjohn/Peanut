@@ -59,7 +59,7 @@ public class ShotPresenter implements ShotsContract.Presenter {
                 mShotView.showLoadingIndicator(false);
                 mShotView.showShots(shots);
 
-                Log.e(TAG, "shots: " + shots);
+                //Log.e(TAG, "shots: " + shots);
 
             }
 

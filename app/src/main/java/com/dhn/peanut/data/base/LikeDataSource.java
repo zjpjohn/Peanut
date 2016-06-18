@@ -1,7 +1,10 @@
 package com.dhn.peanut.data.base;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+import com.dhn.peanut.PeanutApplication;
 import com.dhn.peanut.data.LikedShot;
 import com.dhn.peanut.data.Shot;
 import com.dhn.peanut.util.AuthoUtil;
@@ -21,6 +24,8 @@ public class LikeDataSource {
         void onShotsLoaded(List<LikedShot> shots);
         void onDataNotAvailable();
     }
+
+    private RequestQueue requestQueue = Volley.newRequestQueue(PeanutApplication.getContext());
 
     public void getLikes(final LoadLikeCallback loadLikeCallback) {
         String url = AuthoUtil.getLikesUrl() + "?per_page=100";
@@ -50,7 +55,7 @@ public class LikeDataSource {
                     }
             );
 
-            RequestManager.addRequest(request4LikedShot, null);
+            RequestManager.addRequest(requestQueue, request4LikedShot, null);
         }
 
     }

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -41,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
     WebView mWebView;
     @BindView(R.id.login_progress)
     ProgressBar mLoading;
+
+    private RequestQueue mRequestQueue = RequestManager.newInstance();
 
 
     @Override
@@ -166,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
-        RequestManager.addRequest(jsonObjectRequest, null);
+        RequestManager.addRequest(mRequestQueue, jsonObjectRequest, null);
     }
 
     private void onCompleteAuth() {
@@ -223,7 +226,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             };
 
-            RequestManager.addRequest(profileRequest, null);
+            RequestManager.addRequest(mRequestQueue, profileRequest, null);
         }
     }
 

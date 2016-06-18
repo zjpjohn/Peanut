@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -36,10 +37,11 @@ public class RemoteProfileDataSource implements ProfileDataSource {
     private boolean hasNext = false;
     private List<Shot> lists;
     private boolean isFollowed = false;
-
+    private RequestQueue mRequestQueue;
 
     public RemoteProfileDataSource() {
         lists = new ArrayList<>();
+        mRequestQueue = RequestManager.newInstance();
 
     }
 
@@ -83,7 +85,7 @@ public class RemoteProfileDataSource implements ProfileDataSource {
             }
         };
 
-        RequestManager.addRequest(request4Shots, null);
+        RequestManager.addRequest(mRequestQueue, request4Shots, null);
     }
 
     @Override
@@ -122,7 +124,7 @@ public class RemoteProfileDataSource implements ProfileDataSource {
             }
         };
 
-        RequestManager.addRequest(request, null);
+        RequestManager.addRequest(mRequestQueue, request, null);
     }
 
 
@@ -156,7 +158,7 @@ public class RemoteProfileDataSource implements ProfileDataSource {
             }
         };
 
-        RequestManager.addRequest(request, null);
+        RequestManager.addRequest(mRequestQueue, request, null);
     }
 
     /**

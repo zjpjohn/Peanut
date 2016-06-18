@@ -2,8 +2,12 @@ package com.dhn.peanut.data.remote;
 
 import android.util.Log;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+import com.dhn.peanut.PeanutApplication;
 import com.dhn.peanut.data.Shot;
 import com.dhn.peanut.data.base.LoadShotsCallback;
 import com.dhn.peanut.data.base.ShotDataSource;
@@ -24,10 +28,14 @@ public class RemoteShotData implements ShotDataSource {
     List<Shot> debuts;
     List<Shot> gifs;
 
+    private RequestQueue mRequestQueue;
+
     private RemoteShotData() {
         shots = new ArrayList<>();
         debuts = new ArrayList<>();
         gifs = new ArrayList<>();
+
+        mRequestQueue = Volley.newRequestQueue(PeanutApplication.getContext());
     }
 
     //TODO 单例
@@ -52,16 +60,14 @@ public class RemoteShotData implements ShotDataSource {
             url += "&sort=" + sort;
         }
 
-
         if (page == 1) {
             shots.clear();
         }
-        RequestManager.addRequest(new Request4Shots(
+        RequestManager.addRequest(mRequestQueue, new Request4Shots(
                 url,
                 new Response.Listener<ArrayList<Shot>>() {
                     @Override
                     public void onResponse(ArrayList<Shot> response) {
-
                         shots.addAll(response);
                         callback.onShotsLoaded(shots);
                     }
@@ -74,6 +80,7 @@ public class RemoteShotData implements ShotDataSource {
                 }
         ), null);
     }
+
 
     @Override
     public void getDebuts(String sort, int page, final LoadShotsCallback callback) {
@@ -88,7 +95,7 @@ public class RemoteShotData implements ShotDataSource {
         if (page == 1) {
             debuts.clear();
         }
-        RequestManager.addRequest(new Request4Shots(
+        RequestManager.addRequest(mRequestQueue, new Request4Shots(
                 url,
                 new Response.Listener<ArrayList<Shot>>() {
                     @Override
@@ -119,7 +126,7 @@ public class RemoteShotData implements ShotDataSource {
         if (page == 1) {
             gifs.clear();
         }
-        RequestManager.addRequest(new Request4Shots(
+        RequestManager.addRequest(mRequestQueue, new Request4Shots(
                 url,
                 new Response.Listener<ArrayList<Shot>>() {
                     @Override

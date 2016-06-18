@@ -40,6 +40,7 @@ public class ShotFragment extends BaseFragment {
             }
         });
 
+        //加载第一页数据
         mPresenter.loadShots(true);
     }
 }

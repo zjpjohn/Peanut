@@ -25,8 +25,9 @@
                 android:layout_height="wrap_content"
                 app:tabGravity="fill"
                 app:tabMode="fixed"
-                app:tabSelectedTextColor="@color/colorPrimaryDark"
-                app:tabTextColor="#ffffff">
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextColor="@color/grey"
+                app:tabIndicatorColor="@color/white">
             </android.support.design.widget.TabLayout>
         </android.support.design.widget.AppBarLayout>
 
@@ -44,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="left"
-        android:background="@color/colorPrimary"
+        android:background="@color/main_back"
         app:headerLayout="@layout/nv_header"
         app:menu="@menu/drawer_view">
     </android.support.design.widget.NavigationView>

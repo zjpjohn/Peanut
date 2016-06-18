@@ -15,7 +15,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -69,9 +68,6 @@ public class MainActivity extends AppCompatActivity {
     private ShotsContract.View debutsFragment;
     private ShotsContract.View gifFragment;
     private ShotsContract.Presenter mPresenter;
-    private ActionBarDrawerToggle drawerToggle;
-
-    private SharedPreferences sharePre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +89,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        drawerToggle.syncState();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -132,14 +123,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void initToolbar() {
         //ToolBar
-        mToolbar.setTitleTextColor(getResources().getColor(R.color.black));
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(mToolbar);
         ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
 
-        drawerToggle = setupDrawerToggle();
-        mDrawerLayout.setDrawerListener(drawerToggle);
     }
 
     private void initNavigation() {
@@ -217,19 +206,16 @@ public class MainActivity extends AppCompatActivity {
     private void initTabLayout() {
         mTabLayout.addTab(mTabLayout.newTab().setText("SHOTS"));
         mTabLayout.addTab(mTabLayout.newTab().setText("DEBUTS"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("GIF"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("GIFS"));
 
         mTabLayout.setupWithViewPager(mViewPager);
 
         //否则无法显示title
         mTabLayout.getTabAt(0).setText("SHOTS");
         mTabLayout.getTabAt(1).setText("DEBUTS");
-        mTabLayout.getTabAt(2).setText("GIF");
+        mTabLayout.getTabAt(2).setText("GIFS");
     }
 
-    private ActionBarDrawerToggle setupDrawerToggle() {
-        return new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open,  R.string.drawer_close);
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -252,23 +238,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
         switch (item.getItemId()) {
             case R.id.menu_search:
-                Toast.makeText(this, "in develop", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "敬请期待", Toast.LENGTH_SHORT).show();
                 break;
         }
         return true;
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggles
-        drawerToggle.onConfigurationChanged(newConfig);
-    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
 

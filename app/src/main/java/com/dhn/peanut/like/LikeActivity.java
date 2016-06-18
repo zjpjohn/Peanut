@@ -24,7 +24,7 @@ public class LikeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_like);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.black));
-        toolbar.setTitle("My like");
+        toolbar.setTitle("喜爱");
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.arrow_left);
 

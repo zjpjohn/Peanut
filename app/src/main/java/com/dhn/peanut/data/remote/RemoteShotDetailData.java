@@ -4,6 +4,7 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -26,6 +27,7 @@ import java.util.Map;
 public class RemoteShotDetailData implements ShotDetailDataSource {
 
     public static RemoteShotDetailData INSTANCE;
+    private RequestQueue mRequestQueue = RequestManager.newInstance();
 
     public static RemoteShotDetailData getInstance() {
         if (INSTANCE == null) {
@@ -39,19 +41,20 @@ public class RemoteShotDetailData implements ShotDetailDataSource {
     public void getComment(int shotId, final LoadShotDetailCallBack commentCallBack) {
         //发起网络请求
         String url = Comment.COMMENTS_BASE_URL + shotId + "/" + "comments";
-        RequestManager.addRequest(new Requet4Comments(url, new Response.Listener<List<Comment>>() {
-            @Override
-            public void onResponse(List<Comment> response) {
-
-                commentCallBack.onCommentLoaded(response);
-            }
-        },
-                new Response.ErrorListener() {
+        RequestManager.addRequest(mRequestQueue,
+                new Requet4Comments(url, new Response.Listener<List<Comment>>() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        commentCallBack.onCommentNotAvailable();
+                    public void onResponse(List<Comment> response) {
+
+                        commentCallBack.onCommentLoaded(response);
                     }
-                }), null);
+                },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                commentCallBack.onCommentNotAvailable();
+                            }
+                        }), null);
     }
 
     @Override
@@ -86,7 +89,7 @@ public class RemoteShotDetailData implements ShotDetailDataSource {
                 }
             };
 
-            RequestManager.addRequest(request, null);
+            RequestManager.addRequest(mRequestQueue, request, null);
         }
 
     }
@@ -121,7 +124,7 @@ public class RemoteShotDetailData implements ShotDetailDataSource {
             }
         };
 
-        RequestManager.addRequest(request, null);
+        RequestManager.addRequest(mRequestQueue, request, null);
 
     }
 }

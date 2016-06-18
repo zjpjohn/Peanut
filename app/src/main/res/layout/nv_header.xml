@@ -10,7 +10,8 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         app:roundAsCircle="true"
-        android:layout_margin="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"/>
 
     <TextView
         android:id="@+id/header_username"
@@ -20,5 +21,6 @@
         android:textSize="18sp"
         android:textColor="@color/white"
         android:layout_below="@+id/header_draweeview"
-        android:layout_margin="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"/>
 </RelativeLayout>
