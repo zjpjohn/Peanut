@@ -21,6 +21,7 @@ import com.dhn.peanut.shotdetail.ShotDetailActivity;
 import com.dhn.peanut.util.Log;
 import com.dhn.peanut.view.AutoLoadRecyclerView;
 import com.squareup.leakcanary.RefWatcher;
+import com.victor.loading.rotate.RotateLoading;
 
 import java.util.List;
 
@@ -34,8 +35,8 @@ public class LikeFragment extends Fragment implements LikeContract.View{
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
-    @BindView(R.id.loading)
-    HourglassLoadingView mLoadingView;
+    @BindView(R.id.rotateloading)
+    RotateLoading mLoading;
     @BindView(R.id.like_nolike_tv)
     TextView mNoContentTv;
 
@@ -118,22 +119,30 @@ public class LikeFragment extends Fragment implements LikeContract.View{
 
     @Override
     public void showLoading() {
-        mLoadingView.setVisibility(View.VISIBLE);
+        mLoading.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.GONE);
-        mLoadingView.start();
+        mLoading.start();
     }
 
     @Override
     public void hideLoading() {
-        mLoadingView.setVisibility(View.GONE);
+        mLoading.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        mLoadingView.stop();
+        mLoading.stop();
     }
 
     @Override
     public void showNoContent() {
         mRecyclerView.setVisibility(View.GONE);
-        mLoadingView.setVisibility(View.GONE);
+        mLoading.setVisibility(View.GONE);
+        mNoContentTv.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showNeedAutho() {
+        mRecyclerView.setVisibility(View.GONE);
+        mLoading.setVisibility(View.GONE);
+        mNoContentTv.setText("请先登录");
         mNoContentTv.setVisibility(View.VISIBLE);
     }
 }

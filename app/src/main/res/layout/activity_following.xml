@@ -17,6 +17,15 @@
         </android.support.v7.widget.RecyclerView>
 
         <include layout="@layout/loading"></include>
+
+        <TextView
+            android:id="@+id/tv_no_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="没有数据"
+            android:visibility="gone"/>
     </FrameLayout>
 
 

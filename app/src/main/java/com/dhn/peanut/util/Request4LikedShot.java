@@ -27,7 +27,7 @@ public class Request4LikedShot extends Request<ArrayList<LikedShot>> {
 
     static {
         headers.put("Accept", "application/vnd.dribbble.v1.param+json");
-        headers.put("Authorization", "Bearer 4e3e676ce2881d166900f7f0ba4f1c0c599f3126ff426c78e61fd3fc233b2a32");
+        headers.put("Authorization", "Bearer " + AuthoUtil.getToken());
     }
 
     public Request4LikedShot(String url, Response.Listener<ArrayList<LikedShot>> listener , Response.ErrorListener errorListener) {

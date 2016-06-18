@@ -26,7 +26,7 @@ public class Request4Following extends Request<ArrayList<Following>> {
 
     static {
         headers.put("Accept", "application/vnd.dribbble.v1.param+json");
-        headers.put("Authorization", "Bearer " + PeanutInfo.CLIENT_TOLEN);
+        headers.put("Authorization", "Bearer " + AuthoUtil.getToken());
     }
 
     public Request4Following(String url, Response.Listener<ArrayList<Following>> listener , Response.ErrorListener errorListener) {

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -16,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.dhn.peanut.R;
 import com.dhn.peanut.data.Following;
+import com.dhn.peanut.util.AuthoUtil;
 import com.dhn.peanut.util.PeanutInfo;
 import com.dhn.peanut.util.Request4Following;
 import com.dhn.peanut.util.RequestManager;
@@ -36,6 +38,8 @@ public class FollowingActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     @BindView(R.id.rotateloading)
     RotateLoading mLoading;
+    @BindView(R.id.tv_no_data)
+    TextView mTvNoData;
 
     private FollowingAdapter mAdapter;
 
@@ -49,30 +53,52 @@ public class FollowingActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.arrow_left);
 
-        mLoading.start();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mAdapter = new FollowingAdapter(this);
+        if (!AuthoUtil.isLogined()) {
+            showNeedAutho();
+        } else {
+            mLoading.start();
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+            mAdapter = new FollowingAdapter(this);
 
-        Request4Following request4Following = new Request4Following(
-                PeanutInfo.URL_FOLLOWINGS,
-                new Response.Listener<ArrayList<Following>>() {
-                    @Override
-                    public void onResponse(ArrayList<Following> response) {
-                        mRecyclerView.setAdapter(mAdapter);
-                        mAdapter.replaceData(response);
-                        mLoading.stop();
+            Request4Following request4Following = new Request4Following(
+                    PeanutInfo.URL_FOLLOWINGS,
+                    new Response.Listener<ArrayList<Following>>() {
+                        @Override
+                        public void onResponse(ArrayList<Following> response) {
+                            if (response.isEmpty()) {
+                                showNoData();
+                            } else {
+                                mRecyclerView.setAdapter(mAdapter);
+                                mAdapter.replaceData(response);
+                                mLoading.stop();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+            );
 
-                    }
-                }
-        );
-
-        RequestManager.addRequest(request4Following, this);
+            RequestManager.addRequest(request4Following, this);
+        }
     }
+
+    public void showNoData() {
+        mTvNoData.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.GONE);
+        mLoading.setVisibility(View.GONE);
+    }
+
+    public void showNeedAutho() {
+        mTvNoData.setVisibility(View.VISIBLE);
+        mTvNoData.setText("请先登录");
+        mRecyclerView.setVisibility(View.GONE);
+        mLoading.setVisibility(View.GONE);
+    }
+
 
     @Override
     protected void onDestroy() {

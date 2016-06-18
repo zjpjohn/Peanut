@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.dhn.peanut.data.LikedShot;
 import com.dhn.peanut.data.Shot;
 import com.dhn.peanut.data.base.LikeDataSource;
+import com.dhn.peanut.util.AuthoUtil;
 
 import java.util.List;
 
@@ -24,25 +25,28 @@ public class LikePresenter implements LikeContract.Presenter {
 
     @Override
     public void loadLikes() {
-        mView.showLoading();
+        if (!AuthoUtil.isLogined()) {
+            mView.showNeedAutho();
+        } else {
+            mView.showLoading();
+            mData.getLikes(new LikeDataSource.LoadLikeCallback() {
+                @Override
+                public void onShotsLoaded(List<LikedShot> shots) {
+                    mView.hideLoading();
+                    mView.showLoadingIndicator(false);
 
-        mData.getLikes(new LikeDataSource.LoadLikeCallback() {
-            @Override
-            public void onShotsLoaded(List<LikedShot> shots) {
-                mView.hideLoading();
-                mView.showLoadingIndicator(false);
-
-                if (shots == null && shots.size() == 0) {
-                    mView.showNoContent();
-                } else {
-                    mView.showLikes(shots);
+                    if (shots == null || shots.isEmpty()) {
+                        mView.showNoContent();
+                    } else {
+                        mView.showLikes(shots);
+                    }
                 }
-            }
 
-            @Override
-            public void onDataNotAvailable() {
-                mView.showNoContent();
-            }
-        });
+                @Override
+                public void onDataNotAvailable() {
+                    mView.showNoContent();
+                }
+            });
+        }
     }
 }

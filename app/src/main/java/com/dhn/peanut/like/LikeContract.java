@@ -17,6 +17,7 @@ public interface LikeContract {
         void showLoading();
         void hideLoading();
         void showNoContent();
+        void showNeedAutho();
     }
 
     interface Presenter {
