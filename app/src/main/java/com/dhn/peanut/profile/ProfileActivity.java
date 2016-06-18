@@ -107,6 +107,7 @@ public class ProfileActivity extends AppCompatActivity {
         mToolbar.setTitle(user.getUsername());
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.arrow_left);
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
         //RecyclerView
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

@@ -88,6 +88,7 @@ public class ShotDtailPresenter implements ShotDetailContract.Presenter {
             mView.showLike();
             Toast.makeText(PeanutApplication.getContext(), "like", Toast.LENGTH_SHORT).show();
         }
+        mIsLiked  = !mIsLiked;
 
     }
 }

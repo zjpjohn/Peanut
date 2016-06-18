@@ -1,6 +1,7 @@
 package com.dhn.peanut.shotdetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.dhn.peanut.R;
 import com.dhn.peanut.data.Comment;
 import com.dhn.peanut.data.Shot;
+import com.dhn.peanut.profile.ProfileActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
@@ -70,13 +72,19 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
 
     @Override
     public void onBindViewHolder(CommentHolder holder, int position) {
-        Comment comment = comments.get(position);
+        final Comment comment = comments.get(position);
         if (comment.getType() == Comment.NORNAL) {
             holder.name.setText(comment.getUser().getUsername());
             holder.content.setText(Html.fromHtml(comment.getBody()));
             //设置头像
             Uri uri = Uri.parse(comment.getUser().getAvatar_url());
             holder.commenterPic.setImageURI(uri);
+            holder.commenterPic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startProfileActivity(comment.getUser());
+                }
+            });
         } else if (comment.getType() == comment.HEADER){
             holder.commentTitle.setText(shot.getTitle());
             String desc = shot.getDescription() != null ? shot.getDescription() : "";
@@ -108,6 +116,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
     public int getItemViewType(int position) {
         return comments.get(position).getType();
 
+    }
+
+    private void startProfileActivity(Shot.User user) {
+        Intent intent = new Intent(mContext, ProfileActivity.class);
+        intent.putExtra("user", user);
+        mContext.startActivity(intent);
     }
 
     class CommentHolder extends RecyclerView.ViewHolder {

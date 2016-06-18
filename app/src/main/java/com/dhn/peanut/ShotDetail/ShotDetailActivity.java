@@ -33,7 +33,7 @@ public class ShotDetailActivity extends AppCompatActivity {
     private void initView() {
         //toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitleTextColor(getResources().getColor(R.color.black));
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         mToolbar.setTitle(mShot.getTitle());
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.arrow_left);

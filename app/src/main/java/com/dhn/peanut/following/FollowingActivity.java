@@ -52,6 +52,7 @@ public class FollowingActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mToolbar.setTitle("关注者");
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.arrow_left);
 

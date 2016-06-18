@@ -4,7 +4,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="20dp">
+    android:background="@color/white"
+    android:layout_margin="4dp"
+    android:padding="15dp">
 
     <TextView
         android:id="@+id/comment_title"
@@ -12,6 +14,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="20sp"
+        android:text="SF"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -22,24 +25,29 @@
         android:id="@+id/commnet_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/comment_title"
-        android:layout_margin="20dp"
-        android:layout_alignLeft="@id/comment_title"/>
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="I heard you guys like this place"
+        android:layout_below="@+id/comment_title"
+        android:layout_alignLeft="@+id/comment_title"
+        android:layout_alignStart="@+id/comment_title" />
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/author_pic"
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:roundAsCircle="true"
-        android:layout_below="@id/commnet_desc"
-        android:layout_margin="10dp"
-        android:layout_alignLeft="@id/comment_title"/>
+        android:layout_below="@+id/commnet_desc"
+        android:layout_alignLeft="@+id/commnet_desc"
+        android:layout_alignStart="@+id/commnet_desc" />
 
     <TextView
         android:id="@+id/author_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="dhn"
+        android:textColor="@color/black"
+        android:textSize="18sp"
         android:layout_toRightOf="@id/author_pic"
         android:layout_alignBottom="@id/author_pic"
         android:layout_marginLeft="20dp"/>

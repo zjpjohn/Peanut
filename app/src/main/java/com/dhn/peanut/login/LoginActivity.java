@@ -25,6 +25,7 @@ import com.dhn.peanut.util.AuthoUtil;
 import com.dhn.peanut.util.Log;
 import com.dhn.peanut.util.PeanutInfo;
 import com.dhn.peanut.util.RequestManager;
+import com.victor.loading.rotate.RotateLoading;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,8 +41,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.login_webview)
     WebView mWebView;
-    @BindView(R.id.login_progress)
-    ProgressBar mLoading;
+    @BindView(R.id.rotateloading)
+    RotateLoading mLoading;
 
     private RequestQueue mRequestQueue = RequestManager.newInstance();
 
@@ -65,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("token is null, need authorization");
             }
 
-            mLoading.setVisibility(View.VISIBLE);
+            mLoading.start();
 
             //配置webview属性
             mWebView.setWebViewClient(new WebViewClient() {
@@ -99,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onPageFinished(WebView view, String url) {
                     super.onPageFinished(view, url);
-                    mLoading.setVisibility(View.INVISIBLE);
+                    mLoading.stop();
                 }
             });
 
@@ -174,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void onCompleteAuth() {
         fetchUserInfo();
-        mLoading.setVisibility(View.INVISIBLE);
+        mLoading.stop();
     }
 
     private void fetchUserInfo() {

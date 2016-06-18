@@ -66,6 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
+                android:layout_gravity="center_vertical"
                 android:text="1638" />
 
             <ImageView
@@ -78,6 +79,7 @@
                 android:id="@+id/item_shot_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_margin="4dp"
                 android:text="126" />
 
@@ -91,6 +93,7 @@
                 android:id="@+id/item_shot_comments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_margin="4dp"
                 android:text="9" />
 

@@ -14,12 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"></WebView>
 
-        <ProgressBar
-            android:id="@+id/login_progress"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
+        <include layout="@layout/loading"></include>
 
     </FrameLayout>
 
