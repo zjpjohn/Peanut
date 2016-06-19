@@ -16,7 +16,7 @@
 
 
 ##下载
-[apk下载](https://github.com/gatsbydhn/Peanut/blob/master/app/app-release.apk)
+[apk下载](http://pan.baidu.com/s/1qYmufSS)
 
 ##截图
 ![主页](https://github.com/gatsbydhn/Peanut/blob/master/image/shot1.png)
