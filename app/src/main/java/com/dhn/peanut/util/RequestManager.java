@@ -12,7 +12,7 @@ import com.dhn.peanut.PeanutApplication;
 public class RequestManager {
 
     public static final int OUT_TIME = 10000;
-    public static final int TIMES_OF_RETRY = 1;
+    public static final int TIMES_OF_RETRY = 5;
 
     private RequestManager() {
     }

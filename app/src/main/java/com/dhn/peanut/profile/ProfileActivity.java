@@ -15,6 +15,7 @@ import com.dhn.peanut.data.Shot;
 import com.dhn.peanut.data.base.ProfileCallback;
 import com.dhn.peanut.data.base.ProfileDataSource;
 import com.dhn.peanut.data.remote.RemoteProfileDataSource;
+import com.dhn.peanut.login.LoginActivity;
 import com.dhn.peanut.util.AuthoUtil;
 import com.dhn.peanut.util.Log;
 import com.dhn.peanut.view.AutoLoadRecyclerView;
@@ -193,6 +194,8 @@ public class ProfileActivity extends AppCompatActivity {
 
             if (!AuthoUtil.isLogined()) {
                 Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
             } else {
 
                 dataSource.changeFollowState(user.getId(), !mIsFollowed, new ProfileCallback() {

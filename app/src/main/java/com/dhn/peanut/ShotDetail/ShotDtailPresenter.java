@@ -82,11 +82,11 @@ public class ShotDtailPresenter implements ShotDetailContract.Presenter {
         if (mIsLiked) {
             mDatasource.changeLike(id, false);
             mView.showUnLike();
-            Toast.makeText(PeanutApplication.getContext(), "unlike", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PeanutApplication.getContext(), "添加到喜欢列表", Toast.LENGTH_SHORT).show();
         } else {
             mDatasource.changeLike(id, true);
             mView.showLike();
-            Toast.makeText(PeanutApplication.getContext(), "like", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PeanutApplication.getContext(), "从喜欢列表去除", Toast.LENGTH_SHORT).show();
         }
         mIsLiked  = !mIsLiked;
 

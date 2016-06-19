@@ -1,5 +1,6 @@
 package com.dhn.peanut.shotdetail;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.dhn.peanut.PeanutApplication;
 import com.dhn.peanut.R;
 import com.dhn.peanut.data.Comment;
 import com.dhn.peanut.data.Shot;
+import com.dhn.peanut.login.LoginActivity;
 import com.dhn.peanut.util.AuthoUtil;
 import com.dhn.peanut.util.ShareUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -156,6 +158,8 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
             case R.id.menu_like:
                 if (!AuthoUtil.isLogined()) {
                     Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
                 } else {
                     mPresenter.changeLike(mShot.getId());
                 }

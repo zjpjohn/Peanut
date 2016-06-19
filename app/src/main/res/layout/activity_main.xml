@@ -14,10 +14,7 @@
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true">
 
-            <include
-                layout="@layout/toolbar"
-                app:layout_scrollFlags="scroll|enterAlways">
-            </include>
+            <include layout="@layout/toolbar"></include>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/main_tablayout"
@@ -45,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="left"
-        android:background="@color/main_back"
+        android:background="@color/colorPrimary"
         app:headerLayout="@layout/nv_header"
         app:menu="@menu/drawer_view">
     </android.support.design.widget.NavigationView>
