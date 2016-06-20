@@ -170,7 +170,7 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Toast.makeText(ProfileActivity.this, "no more data", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this, "无更多数据", Toast.LENGTH_SHORT).show();
                 }
             }
         });

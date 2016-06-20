@@ -43,7 +43,7 @@ public class ShotDtailPresenter implements ShotDetailContract.Presenter {
 
             @Override
             public void onCommentNotAvailable() {
-                mView.showToast("something wrong, please check your network");
+                mView.showToast("出错啦，请检查网络后重试");
             }
         });
     }
