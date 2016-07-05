@@ -3,8 +3,10 @@ package com.dhn.peanut.shots;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import java.util.List;
 
 
 public class DebutsFragment extends BaseFragment {
+    public static final String TAG = "DebutsFragment";
 
     public DebutsFragment(){};
     public static DebutsFragment newInstance() {
@@ -43,4 +46,6 @@ public class DebutsFragment extends BaseFragment {
 
         mPresenter.loadDebuts(true);
     }
+
+
 }

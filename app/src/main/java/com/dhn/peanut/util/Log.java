@@ -4,7 +4,7 @@ package com.dhn.peanut.util;
  * Created by DHN on 2016/6/4.
  */
 public class Log {
-    public static final boolean DBG = true;
+    public static final boolean DBG = false;
 
     public static final String TAG = "PEANUT";
 

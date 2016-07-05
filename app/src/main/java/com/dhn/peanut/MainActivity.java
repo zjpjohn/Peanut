@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private ShotsContract.View debutsFragment;
     private ShotsContract.View gifFragment;
     private ShotsContract.Presenter mPresenter;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         initNavigation();
         initViewPager();
         initTabLayout();
-
 
         if (Log.DBG) {
             Log.e("returned username: " + AuthoUtil.getUserName());
@@ -126,9 +127,16 @@ public class MainActivity extends AppCompatActivity {
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(mToolbar);
         ActionBar ab = getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-        ab.setDisplayHomeAsUpEnabled(true);
+        //ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        //ab.setDisplayHomeAsUpEnabled(true);
+        getActionBar();
+        mDrawerToggle = setupDrawerToggle();
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
 
+    }
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
     }
 
     private void initNavigation() {
@@ -199,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapter.addFragment((Fragment) shotFragment);
         pagerAdapter.addFragment((Fragment) debutsFragment);
         pagerAdapter.addFragment((Fragment) gifFragment);
+        mViewPager.setOffscreenPageLimit(2);
 
         mViewPager.setAdapter(pagerAdapter);
     }
@@ -238,12 +247,29 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_search:
-                Toast.makeText(this, "敬请期待", Toast.LENGTH_SHORT).show();
-                break;
+        if (item.getItemId() == R.id.menu_search) {
+            Toast.makeText(this, "敬请期待", Toast.LENGTH_SHORT).show();
         }
-        return true;
+
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
 

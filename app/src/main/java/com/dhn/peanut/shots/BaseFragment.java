@@ -6,11 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dhn.library.HourglassLoadingView;
 import com.dhn.peanut.PeanutApplication;
 import com.dhn.peanut.R;
 import com.dhn.peanut.shotdetail.ShotDetailActivity;
@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 
 public class BaseFragment extends Fragment implements ShotsContract.View {
 
+    public static final String TAG = "BaseFragment";
 
     @BindView(R.id.refreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -39,10 +40,19 @@ public class BaseFragment extends Fragment implements ShotsContract.View {
     protected ShotsContract.Presenter mPresenter;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_shots, container, false);
         ButterKnife.bind(this, root);
+
+
 
         return root;
     }
