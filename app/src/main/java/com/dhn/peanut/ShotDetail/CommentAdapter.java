@@ -16,8 +16,10 @@ import com.dhn.peanut.data.Shot;
 import com.dhn.peanut.profile.ProfileActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
+import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -76,9 +78,16 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
         if (comment.getType() == Comment.NORNAL) {
             holder.name.setText(comment.getUser().getUsername());
             holder.content.setText(Html.fromHtml(comment.getBody()));
+
             //设置头像
-            Uri uri = Uri.parse(comment.getUser().getAvatar_url());
-            holder.commenterPic.setImageURI(uri);
+            Uri avatarUri = Uri.parse(comment.getUser().getAvatar_url());
+            GenericDraweeHierarchyBuilder draweeBuilder = new GenericDraweeHierarchyBuilder(mContext.getResources());
+            GenericDraweeHierarchy avatrrHierarchy = draweeBuilder
+                    .setRoundingParams(RoundingParams.asCircle())
+                    .setPlaceholderImage(mContext.getResources().getDrawable(R.drawable.avatar), ScalingUtils.ScaleType.FIT_CENTER)
+                    .build();
+            holder.commenterPic.setHierarchy(avatrrHierarchy);
+            holder.commenterPic.setImageURI(avatarUri);
             holder.commenterPic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

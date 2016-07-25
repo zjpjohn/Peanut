@@ -22,9 +22,11 @@ import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.DraweeView;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +101,15 @@ class ShotAdapter extends RecyclerView.Adapter<ShotAdapter.Holder> {
     public void onBindViewHolder(Holder holder, int position) {
         if (getItemViewType(position) == TYPE_ITEM) {
             final Shot shot = data.get(position);
+
+            //头像
             Uri avatarUri = Uri.parse(shot.getUser().getAvatar_url());
+            GenericDraweeHierarchyBuilder draweeBuilder = new GenericDraweeHierarchyBuilder(context.getResources());
+            GenericDraweeHierarchy avatrrHierarchy = draweeBuilder
+                    .setRoundingParams(RoundingParams.asCircle())
+                    .setPlaceholderImage(context.getResources().getDrawable(R.drawable.avatar), ScalingUtils.ScaleType.FIT_CENTER)
+                    .build();
+            holder.avatarView.setHierarchy(avatrrHierarchy);
             holder.avatarView.setImageURI(avatarUri);
             holder.avatarView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -110,14 +120,20 @@ class ShotAdapter extends RecyclerView.Adapter<ShotAdapter.Holder> {
                 }
             });
 
-            Uri picUri = Uri.parse(shot.getImages().getNormal());
+            //加载图片
+            Uri normalPicUri = Uri.parse(shot.getImages().getNormal());
+            Uri teaserPicUri = Uri.parse(shot.getImages().getTeaser());
+            //设置自动播放动画,低像素图片
             DraweeController controller = Fresco.newDraweeControllerBuilder()
-                    .setUri(picUri)
+                    .setLowResImageRequest(ImageRequest.fromUri(teaserPicUri))
+                    .setImageRequest(ImageRequest.fromUri(normalPicUri))
                     .setAutoPlayAnimations(true)
                     .build();
+            //设置进度条,占位符
             GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(context.getResources());
             GenericDraweeHierarchy hierarchy = builder
                     .setProgressBarImage(new ProgressBarDrawable())
+                    .setPlaceholderImage(context.getResources().getDrawable(R.drawable.holder), ScalingUtils.ScaleType.FIT_CENTER)
                     .build();
             holder.draweeView.setController(controller);
             holder.draweeView.setHierarchy(hierarchy);

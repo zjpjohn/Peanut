@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dhn.peanut.data.Shot;
 import com.dhn.peanut.data.remote.RemoteShotData;
 import com.dhn.peanut.following.FollowingActivity;
 import com.dhn.peanut.like.LikeActivity;
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     TabLayout mTabLayout;
     @BindView(R.id.main_viewpager)
     ViewPager mViewPager;
+    @BindView(R.id.main_fab)
+    FloatingActionButton mFab;
 
     private SimpleDraweeView mLeftDraweeView;
     private TextView mLeftNameTv;
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        //创建Fragment，并添加引用关系
         initData();
 
         initToolbar();
@@ -120,6 +125,13 @@ public class MainActivity extends AppCompatActivity {
         mPresenter = new ShotPresenter(shotFragment, debutsFragment, gifFragment, RemoteShotData.getInstance());
 
 
+        //TODO 跳转到发表作品页
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "create shot", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initToolbar() {
@@ -207,6 +219,8 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapter.addFragment((Fragment) shotFragment);
         pagerAdapter.addFragment((Fragment) debutsFragment);
         pagerAdapter.addFragment((Fragment) gifFragment);
+
+        //设置缓存
         mViewPager.setOffscreenPageLimit(2);
 
         mViewPager.setAdapter(pagerAdapter);
@@ -225,6 +239,12 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.getTabAt(2).setText("GIFS");
     }
 
+
+    private void changeLayout(int layout) {
+        shotFragment.changeLayout(layout);
+        debutsFragment.changeLayout(layout);
+        gifFragment.changeLayout(layout);
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -270,6 +290,14 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggles
         mDrawerToggle.onConfigurationChanged(newConfig);
+
+        //切换到竖屏
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            changeLayout(ShotsContract.LINEAR);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            changeLayout(ShotsContract.GRIDE);
+        }
+
     }
 
 

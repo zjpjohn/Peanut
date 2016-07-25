@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,9 +52,6 @@ public class BaseFragment extends Fragment implements ShotsContract.View {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_shots, container, false);
         ButterKnife.bind(this, root);
-
-
-
         return root;
     }
 
@@ -107,6 +105,15 @@ public class BaseFragment extends Fragment implements ShotsContract.View {
         Intent intent = new Intent(getContext(), ShotDetailActivity.class);
         intent.putExtra("shot", shot);
         startActivity(intent);
+    }
+
+    @Override
+    public void changeLayout(int layout) {
+        if (layout == ShotsContract.LINEAR) {
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        } else if (layout == ShotsContract.GRIDE) {
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        }
     }
 
     @Override

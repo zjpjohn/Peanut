@@ -3,6 +3,7 @@ package com.dhn.peanut.shotdetail;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dhn.peanut.R;
@@ -23,6 +24,7 @@ public class ShotDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shot_dtail);
         initData();
         initView();
+        getActionBar();
     }
 
 
@@ -47,6 +49,9 @@ public class ShotDetailActivity extends AppCompatActivity {
                 .replace(R.id.detail_content, mFragment)
                 .commit();
     }
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -17,6 +17,10 @@ import com.dhn.peanut.data.Following;
 import com.dhn.peanut.data.Shot;
 import com.dhn.peanut.profile.ProfileActivity;
 import com.dhn.peanut.profile.ProfileAdapter;
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -53,7 +57,14 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.Foll
         //TODO
         final Shot.User user = mFollowings.get(position).getFollowee();
 
-        holder.sdvFollowing.setImageURI(Uri.parse(user.getAvatar_url()));
+        Uri avatarUri = Uri.parse(user.getAvatar_url());
+        GenericDraweeHierarchyBuilder draweeBuilder = new GenericDraweeHierarchyBuilder(mContext.getResources());
+        GenericDraweeHierarchy avatrrHierarchy = draweeBuilder
+                .setRoundingParams(RoundingParams.asCircle())
+                .setPlaceholderImage(mContext.getResources().getDrawable(R.drawable.avatar), ScalingUtils.ScaleType.FIT_CENTER)
+                .build();
+        holder.sdvFollowing.setHierarchy(avatrrHierarchy);
+        holder.sdvFollowing.setImageURI(avatarUri);
 
         holder.tvFollowerName.setText(user.getUsername());
 

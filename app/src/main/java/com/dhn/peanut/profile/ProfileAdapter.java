@@ -19,10 +19,12 @@ import com.dhn.peanut.shotdetail.ShotDetailActivity;
 import com.dhn.peanut.util.AuthoUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
+import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,15 +90,20 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileH
             Uri avatarUri = Uri.parse(user.getAvatar_url());
             holder.avatarView.setImageURI(avatarUri);
 
-            //作品
-            Uri picUri = Uri.parse(shot.getImages().getNormal());
+            //加载图片
+            Uri normalPicUri = Uri.parse(shot.getImages().getNormal());
+            Uri teaserPicUri = Uri.parse(shot.getImages().getTeaser());
+            //设置自动播放动画,低像素图片
             DraweeController controller = Fresco.newDraweeControllerBuilder()
-                    .setUri(picUri)
+                    .setLowResImageRequest(ImageRequest.fromUri(teaserPicUri))
+                    .setImageRequest(ImageRequest.fromUri(normalPicUri))
                     .setAutoPlayAnimations(true)
                     .build();
+            //设置进度条,占位符
             GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(context.getResources());
             GenericDraweeHierarchy hierarchy = builder
                     .setProgressBarImage(new ProgressBarDrawable())
+                    .setPlaceholderImage(context.getResources().getDrawable(R.drawable.holder), ScalingUtils.ScaleType.FIT_CENTER)
                     .build();
             holder.draweeView.setController(controller);
             holder.draweeView.setHierarchy(hierarchy);

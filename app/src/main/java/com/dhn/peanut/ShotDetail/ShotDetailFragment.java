@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,6 +37,8 @@ import java.util.List;
  */
 public class ShotDetailFragment extends Fragment implements ShotDetailContract.View{
 
+    public static final String TAG = "ShotDetailFragment";
+
     private RecyclerView mRecyclerView;
     private RotateLoading mLoading;
     private Menu mMenu;
@@ -58,6 +61,8 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.e(TAG, "onCreate");
+
         if (getArguments() != null) {
             mShot = (Shot) getArguments().get("shot");
         }
@@ -70,13 +75,20 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
         View view = inflater.inflate(R.layout.fragment_shot_detail, container, false);
         mLoading = (RotateLoading) view.findViewById(R.id.rotateloading);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.detail_recyclerview);
+
+        Log.e(TAG, "onCreateView");
+
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        //配置控件属性
         initView();
+
+
+        Log.e(TAG, "onActivityCreated");
 
         //show data in view
         mPresenter.loadComment(mShot.getId());
@@ -86,6 +98,7 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
                 mPresenter.checkLiked(mShot.getId());
             }
         }, 500);
+
     }
 
     @Override
@@ -145,6 +158,9 @@ public class ShotDetailFragment extends Fragment implements ShotDetailContract.V
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
+        Log.e(TAG, "onCreateOptionMenu");
+
         inflater.inflate(R.menu.menu_shot_detail, menu);
         mMenu = menu;
     }

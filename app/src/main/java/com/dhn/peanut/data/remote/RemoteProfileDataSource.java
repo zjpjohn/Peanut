@@ -97,6 +97,7 @@ public class RemoteProfileDataSource implements ProfileDataSource {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.e("checkFollow: onResponse");
                     }
                 },
                 new Response.ErrorListener() {
@@ -116,7 +117,7 @@ public class RemoteProfileDataSource implements ProfileDataSource {
 
             @Override
             protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-                if (response.statusCode == 204) {
+                if (response.statusCode == 204 || response.statusCode == 201) {
                     Log.e("checkFollow: 已follow");
                     isFollowed = true;
                 }
