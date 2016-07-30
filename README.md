@@ -6,14 +6,17 @@
 - 浏览Shots, Debuts, Gifs等模块
 - 登陆，与网站同步数据
 - 分享
-- 收藏喜欢的作品
+- 收藏作品
 - 关注作者
+- 发表作品
 
 优化：
--	屏幕适配，支持横屏改变Recyclerview布局，提供了不同像素大小的图片
+-	屏幕适配，支持横屏改变Recyclerview布局
 -	图片预览
 -	Material Design设计
 -	MVP模式
+-	LeakCanary检测内存泄露
+-	图片预览
 
 后期的工作：
 - 关键字搜索
@@ -30,8 +33,9 @@
 ![登陆](https://github.com/gatsbydhn/Peanut/blob/master/image/shot2.png)
 ![喜爱页](https://github.com/gatsbydhn/Peanut/blob/master/image/shot4.png)
 ![用户详情页](https://github.com/gatsbydhn/Peanut/blob/master/image/shot3.png)
+![喜爱页](https://github.com/gatsbydhn/Peanut/blob/master/image/shot5.png)
+![创建作品](https://github.com/gatsbydhn/Peanut/blob/master/image/shot6.png)
 
 ## 其他
 - 如果发现任何bug，请及时联系我，邮箱：zjqzcsdhn@gmail.com,谢谢！
-- 另求北京、杭州等地实习
 
