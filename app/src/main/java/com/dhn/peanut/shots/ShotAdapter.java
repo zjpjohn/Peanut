@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dhn.peanut.R;
@@ -120,6 +121,13 @@ class ShotAdapter extends RecyclerView.Adapter<ShotAdapter.Holder> {
                 }
             });
 
+            holder.llBottom.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mView.showShotDetails(shot);
+                }
+            });
+
             //加载图片
             Uri normalPicUri = Uri.parse(shot.getImages().getNormal());
             Uri teaserPicUri = Uri.parse(shot.getImages().getTeaser());
@@ -202,6 +210,9 @@ class ShotAdapter extends RecyclerView.Adapter<ShotAdapter.Holder> {
         @Nullable
         @BindView(R.id.shot_cardview)
         CardView cardview;
+        @Nullable
+        @BindView(R.id.ll_bottom)
+        LinearLayout llBottom;
 
 
         public Holder(View itemView) {

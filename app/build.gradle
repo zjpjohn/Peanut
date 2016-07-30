@@ -38,5 +38,5 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     compile 'com.victor:lib:1.0.4'
-
+    compile 'com.afollestad:material-dialogs:0.7.3.1'
 }

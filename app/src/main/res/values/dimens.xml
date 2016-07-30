@@ -3,4 +3,11 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="keyline_1">16.0dip</dimen>
+    <dimen name="keyline_1_minus_12dp">4.0dip</dimen>
+    <dimen name="keyline_1_minus_8dp">8.0dip</dimen>
+    <dimen name="keyline_2">72.0dip</dimen>
+    <dimen name="keyline_2_minus_16dp">56.0dip</dimen>
+    <dimen name="keyline_4dp">4.0dip</dimen>
+    <dimen name="keyline_shot_action_button">16.0dip</dimen>
 </resources>

@@ -2,11 +2,9 @@ package com.dhn.peanut;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -27,12 +25,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dhn.peanut.data.Shot;
+import com.dhn.peanut.create.CreateActivity;
 import com.dhn.peanut.data.remote.RemoteShotData;
 import com.dhn.peanut.following.FollowingActivity;
 import com.dhn.peanut.like.LikeActivity;
 import com.dhn.peanut.login.LoginActivity;
-import com.dhn.peanut.profile.MeActivity;
+import com.dhn.peanut.setting.SettingActivity;
 import com.dhn.peanut.shots.DebutsFragment;
 import com.dhn.peanut.shots.GifFragment;
 import com.dhn.peanut.shots.ShotFragment;
@@ -129,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "create shot", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, CreateActivity.class));
             }
         });
     }
@@ -167,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(new Intent(MainActivity.this, FollowingActivity.class));
                                 break;
                             case R.id.menu_me:
-                                startActivity(new Intent(MainActivity.this, MeActivity.class));
+                                startActivity(new Intent(MainActivity.this, SettingActivity.class));
                                 break;
                             default:
                                 break;
@@ -261,8 +259,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

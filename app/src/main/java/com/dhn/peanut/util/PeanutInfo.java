@@ -30,6 +30,7 @@ public class PeanutInfo {
     public static final String URL_CHECK_FOLLOWING_BASE = URL_BASE + "/user/following/";
     public static final String URL_FOLLOW_BASE = URL_BASE + "/users/";
     public static final String URL_FOLLOWINGS = URL_BASE + "/user/following?page=1&per_page=100";
+    public static final String URL_CREATE = URL_BASE + "/shots";
 
     public static final String USER_USERNAME = "username";
     public static final String USER_AVATAR = "avatar_url";

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar"></include>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead">
+
+        <EditText
+            android:id="@+id/edit_text_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_shot_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_1_minus_8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2">
+
+        <EditText
+            android:id="@+id/edit_text_description"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_shot_description"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_1_minus_8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2">
+
+        <EditText
+            android:id="@+id/edit_text_tags"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_shot_tags"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/image_view_label"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_1_minus_8dp"
+        android:text="@string/select_image_label"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_1_minus_12dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/placeholder"
+        android:contentDescription="@string/select_image_label" />
+
+    <TextView
+        android:id="@+id/image_view_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_1_minus_12dp"
+        android:text="@string/create_shot_tips"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+</LinearLayout>

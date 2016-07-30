@@ -13,4 +13,13 @@
     <string name="title_activity_like">LikeActivity</string>
     <string name="title_activity_me">MeActivity</string>
     <string name="title_activity_following">FollowingActivity</string>
+    <string name="title_activity_create">CreateActivity</string>
+    <string name="hint_bucket_description">描述</string>
+    <string name="hint_bucket_name">名字（必须）</string>
+    <string name="hint_shot_description">描述</string>
+    <string name="hint_shot_tags">标签，用英文逗号分割</string>
+    <string name="hint_shot_title">标题（必须）</string>
+    <string name="select_image_label">选择一个图片</string>
+    <string name="create_shot_tips">Dribbble 在后台创建作品。 创建成功后可能需要几分钟后才可以看到新的作品。</string>
+    <string name="title_activity_setting">SettingActivity</string>
 </resources>

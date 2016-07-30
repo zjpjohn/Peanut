@@ -100,6 +100,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
             holder.commentDesc.setText(Html.fromHtml(desc));
             Uri uri = Uri.parse(shot.getUser().getAvatar_url());
             holder.authorPic.setImageURI(uri);
+            holder.authorPic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startProfileActivity(shot.getUser());
+                }
+            });
             holder.authorName.setText(shot.getUser().getUsername());
         } else {
             Uri uri = Uri.parse(shot.getImages().getNormal());
@@ -113,6 +119,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
                     .build();
             holder.draweeView.setController(controller);
             holder.draweeView.setHierarchy(hierarchy);
+
         }
     }
 

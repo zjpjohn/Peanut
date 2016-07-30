@@ -65,6 +65,14 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.Foll
                 .build();
         holder.sdvFollowing.setHierarchy(avatrrHierarchy);
         holder.sdvFollowing.setImageURI(avatarUri);
+        holder.sdvFollowing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ProfileActivity.class);
+                intent.putExtra("user", user);
+                mContext.startActivity(intent);
+            }
+        });
 
         holder.tvFollowerName.setText(user.getUsername());
 

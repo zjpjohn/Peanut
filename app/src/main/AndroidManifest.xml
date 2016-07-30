@@ -13,9 +13,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme"
-            android:configChanges="orientation|screenSize">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,34 +24,38 @@
         </activity>
         <activity
             android:name=".shotdetail.ShotDetailActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_shot_dtail"
-            android:theme="@style/AppTheme"
-            android:configChanges="orientation|screenSize"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".login.LoginActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme"
-            android:configChanges="orientation|screenSize"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".profile.ProfileActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme"
-            android:configChanges="orientation|screenSize"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".like.LikeActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_like"
-            android:theme="@style/AppTheme"
-            android:configChanges="orientation|screenSize"/>
-        <activity
-            android:name=".profile.MeActivity"
-            android:label="@string/title_activity_me"
-            android:theme="@style/AppTheme"
-            android:configChanges="orientation|screenSize"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".following.FollowingActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_following"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".create.CreateActivity"
+            android:label="@string/title_activity_create"
             android:theme="@style/AppTheme"
-            android:configChanges="orientation|screenSize"></activity>
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".setting.SettingActivity"
+            android:label="@string/title_activity_setting"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.dhn.peanut.like;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.dhn.peanut.R;
 import com.dhn.peanut.data.LikedShot;
 import com.dhn.peanut.data.Shot;
+import com.dhn.peanut.profile.ProfileActivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.drawable.ScalingUtils;
@@ -63,6 +65,12 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeHolder> {
                 .build();
         holder.avatarView.setHierarchy(avatrrHierarchy);
         holder.avatarView.setImageURI(avatarUri);
+        holder.avatarView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startProfileActivity(shot.getShot().getUser());
+            }
+        });
 
         //作品
         Uri normalPicUri = Uri.parse(shot.getShot().getImages().getNormal());
@@ -92,6 +100,12 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeHolder> {
         holder.like.setText("" + shot.getShot().getLikes_count());
         holder.views.setText("" + shot.getShot().getViews_count());
         holder.comments.setText("" + shot.getShot().getComments_count());
+    }
+
+    private void startProfileActivity(Shot.User user) {
+        Intent intent = new Intent(context, ProfileActivity.class);
+        intent.putExtra("user", user);
+        context.startActivity(intent);
     }
 
     @Override
